@@ -28,6 +28,7 @@ from configurations.template_media.conf_webcam import ConfWebcam
 from configurations.template_media.conf_imageGenerator import \
     ConfImageGenerator
 from configurations.template_media.conf_ipc import ConfIpc
+from configurations.template_media.conf_gopro import ConfGoPro
 """
 from configurations.template_media.conf_camera import ConfCamera
 # FIREWIRE
@@ -65,11 +66,15 @@ lst_media = []
 # add camera webcam with default value
 cam = ConfWebcam()
 # cam.name = "Webcam" # already use the default name
-default_media_name = cam.name
 lst_media.append(cam)
 
 # add image generator
 cam = ConfImageGenerator()
+lst_media.append(cam)
+
+# add GoPro
+cam = ConfGoPro()
+default_media_name = cam.name
 lst_media.append(cam)
 
 # add IPC connector image
