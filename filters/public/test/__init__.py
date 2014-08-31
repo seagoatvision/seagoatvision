@@ -16,6 +16,7 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from SeaGoatVision.server.cpp.create_module import *
 import os
 
 # PYTHON FILTERS IMPORT
@@ -25,3 +26,15 @@ for f in os.listdir(os.path.dirname(__file__)):
     filename, _ = os.path.splitext(f)
     code = 'from %(module)s import *' % {'module': filename}
     exec(code)
+
+# Global variable for cpp filter
+# TODO find another solution to remove global variable, like log file
+if 'cppfiles' not in globals():
+    global cppfiles
+    cppfiles = {}
+if 'cpptimestamps' not in globals():
+    global cpptimestamps
+    cpptimestamps = {}
+
+# C++ FILTERS IMPORT
+import_all_cpp_filter(cppfiles, cpptimestamps, sys.modules[__name__], __file__)
