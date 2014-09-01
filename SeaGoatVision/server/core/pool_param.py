@@ -63,8 +63,7 @@ class PoolParam(object):
             self.sync_params()
         if param_name:
             if type(param_name) is list:
-                return [self._dct_param.get(param_name) for param_name in
-                        param_name]
+                return [self._dct_param.get(name) for name in param_name]
             return self._dct_param.get(param_name)
         return self._dct_param
 
@@ -74,8 +73,7 @@ class PoolParam(object):
         if not param_name:
             return []
         if type(param_name) is list:
-            return [self._dct_param.get(param_name) for param_name in
-                    param_name]
+            return [self._dct_param.get(name) for name in param_name]
         return [self._dct_param.get(param_name)]
 
     def get_shared_params(self, param_name=None):

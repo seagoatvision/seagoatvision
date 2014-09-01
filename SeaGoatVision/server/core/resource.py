@@ -26,7 +26,7 @@ from SeaGoatVision.server.controller.publisher import Publisher
 from configuration import Configuration
 from SeaGoatVision.commons import keys
 from SeaGoatVision.server.core import filterchain
-from SeaGoatVision.server import media
+from SeaGoatVision.server.media import media_video
 from filter import Filter
 from SeaGoatVision.commons import log
 
@@ -200,11 +200,11 @@ class Resource(object):
         # update list of filter
         import filters
 
-        self.dct_filter = {name: filtre
-                           for name, filtre in vars(filters).items()
-                           if inspect.isclass(filtre)
-                           if issubclass(filtre, Filter)
-                           if "execute" in vars(filtre)}
+        self.dct_filter = {name: filter
+                           for name, filter in vars(filters).items()
+                           if inspect.isclass(filter)
+                           if issubclass(filter, Filter)
+                           if "execute" in vars(filter)}
 
     def reload_filter(self, filter_name):
         o_filter = self.dct_filter.get(filter_name, None)
@@ -256,9 +256,9 @@ class Resource(object):
                 log.print_function(
                     logger.error, "Camera %s not detected" % name)
         # Force media_video
-        media_video = media.media_video.MediaVideo(
-            keys.get_media_file_video_name())
-        dct_media[keys.get_media_file_video_name()] = media_video
+        key_file_name = keys.get_media_file_video_name()
+        media_video_obj = media_video.MediaVideo(key_file_name)
+        dct_media[key_file_name] = media_video_obj
         # TODO this is a hack to remove missing key warning about publisher
         # Register in publisher
         # media_video._get_cb_publisher()

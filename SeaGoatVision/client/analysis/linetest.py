@@ -130,9 +130,10 @@ class LineTest:
         return min_dist
 
     def find_noise_2(self, filtered, mapping):
-        detected = (filtered * mapping)
-        undetected = (np.invert(detected) * mapping)
-        noise = self.remove_line(filtered, mapping)
+        # detected = (filtered * mapping)
+        # undetected = (np.invert(detected) * mapping)
+        # noise = self.remove_line(filtered, mapping)
+        pass
 
     def find_noise(self, filtered, mapping):
         """Returns the percentage of noise in the image

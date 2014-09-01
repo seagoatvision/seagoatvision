@@ -81,7 +81,7 @@ class Param(object):
                 "%s." % serialize
                 raise ValueError(msg)
             # logger.debug("Param %s deserialization complete, value %s" % (
-            #    self.name, self.value))
+            # self.name, self.value))
             return
 
         if not isinstance(name, str) and not isinstance(name, unicode):
@@ -143,14 +143,13 @@ class Param(object):
             if type_t is float:
                 min_v = None if min_v is None else float(min_v)
                 max_v = None if max_v is None else float(max_v)
-                lst_value = None if lst_value is None else [float(value) for
-                                                            value in lst_value]
+                lst_value = None if lst_value is None else [float(val) for
+                                                            val in lst_value]
             if type_t is int:
                 min_v = None if min_v is None else int(min_v)
                 max_v = None if max_v is None else int(max_v)
-                lst_value = None if lst_value is None else [int(value) for
-                                                            value
-                                                            in lst_value]
+                lst_value = None if lst_value is None else [int(val) for
+                                                            val in lst_value]
         if lst_value is not None and \
                 not (isinstance(lst_value, tuple) or isinstance(lst_value,
                                                                 list)):

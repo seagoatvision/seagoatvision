@@ -31,7 +31,6 @@ class Movie:
         self.open_file()
 
     def open(self):
-        Media_video.open(self)
         self.play()
 
     def open_file(self):
@@ -89,6 +88,5 @@ class Movie:
         return self.last_image.copy()
 
     def close(self):
-        Media_video.close(self)
         if self.video is not None:
             self.video.release()

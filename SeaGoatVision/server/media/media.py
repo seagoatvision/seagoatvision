@@ -88,7 +88,7 @@ class Media(PoolParam):
         return self.status
 
     def set_status(self, status):
-        if not status in MediaStatus.lst_status:
+        if status not in MediaStatus.lst_status:
             msg = "Status %s in media %s not supported." % (status,
                                                             self.get_name())
             logger.error(msg)

@@ -19,7 +19,6 @@
 from SeaGoatVision.client.qt.utils import get_ui
 from SeaGoatVision.client.qt.shared_info import SharedInfo
 from SeaGoatVision.commons import keys
-from PySide.QtGui import QIcon
 
 from PySide.QtCore import Qt
 from PySide import QtCore, QtGui

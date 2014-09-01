@@ -81,7 +81,7 @@ class PygameCam(MediaStreaming):
         try:
             shape = self.dct_resolution[
                 self.param_resolution.get()]
-            fps = self.dct_fps[self.param_fps.get()]
+            # fps = self.dct_fps[self.param_fps.get()]
             self.video = pygame.camera.Camera(self.own_config.path, shape)
             self.video.start()
             self.thread_image = True

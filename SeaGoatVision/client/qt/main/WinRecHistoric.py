@@ -40,7 +40,7 @@ class WinRecHistoric(QtCore.QObject):
         self.controller = controller
         self.subscriber = subscriber
         self.shared_info = SharedInfo()
-        self.lst_old_record_historic = []
+        self.lst_old_rec_hist = []
         self.reload_ui()
         self.subscriber.subscribe(keys.get_key_lst_rec_historic(),
                                   self.update_record_table)
@@ -79,11 +79,11 @@ class WinRecHistoric(QtCore.QObject):
 
     def update_old_record_table(self):
         self.clear_old_records()
-        self.lst_old_record_historic = self.controller.get_lst_old_record_historic()
+        self.lst_old_rec_hist = self.controller.get_lst_old_record_historic()
         table = self.ui.tableFileName
         table.itemDoubleClicked.connect(self._old_rec_prvw_dbl_clicked)
         no_row = 0
-        for rec in self.lst_old_record_historic:
+        for rec in self.lst_old_rec_hist:
             table.insertRow(no_row)
             date = datetime.datetime.fromtimestamp(rec.get("time"))
             str_date = date.strftime('%Y-%m-%d %H:%M:%S')
@@ -93,7 +93,8 @@ class WinRecHistoric(QtCore.QObject):
             table.setItem(no_row, 3, QtGui.QTableWidgetItem())
             table.item(no_row, 3).setIcon(
                 QIcon(self.resource_icon_path + "PreviewAction.png"))
-            table.item(no_row, 3).setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
+            table.item(no_row, 3).setFlags(
+                Qt.ItemIsSelectable | Qt.ItemIsEnabled)
 
     def clear_old_records(self):
         table = self.ui.tableFileName
@@ -109,5 +110,6 @@ class WinRecHistoric(QtCore.QObject):
     def _old_rec_prvw_dbl_clicked(self, item):
         if item.column() == 3:
             table = self.ui.tableFileName
-            file_name = table.item(item.row(), 2).text() + "/" + table.item(item.row(), 1).text()
+            file_name = table.item(item.row(), 2).text() + "/" + table.item(
+                item.row(), 1).text()
             self.preview(file_name)

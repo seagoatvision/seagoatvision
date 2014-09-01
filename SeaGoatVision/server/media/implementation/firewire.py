@@ -224,7 +224,7 @@ class Firewire(MediaStreaming):
         self.camera = None
         self.is_streaming = False
         # reopen the camera
-        kwargs = {"open_streaming": True}
+        # kwargs = {"open_streaming": True}
         # TODO how using kwargs???
         if not self.call_stop:
             thread.start_new_thread(self.try_open_camera, (True,))
@@ -386,10 +386,12 @@ class Firewire(MediaStreaming):
         return True
 
     def _trig_auto_shutter(self, param):
-        return self._trig_auto(param, self.lst_param_shutter, self._get_cam_property)
+        return self._trig_auto(param, self.lst_param_shutter,
+                               self._get_cam_property)
 
     def _trig_auto_whitebalance(self, param):
-        return self._trig_auto(param, self.lst_param_whitebalance, self._get_cam_whitebalance_property)
+        return self._trig_auto(param, self.lst_param_whitebalance,
+                               self._get_cam_whitebalance_property)
 
     def _get_cam_property(self, param):
         return self.camera.get_property(param.get_name())

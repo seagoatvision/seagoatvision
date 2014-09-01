@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#    Copyright (C) 2012-2014  Octets - octets.etsmtl.ca
+# Copyright (C) 2012-2014  Octets - octets.etsmtl.ca
 #
 #    This file is part of SeaGoatVision.
 #
@@ -163,7 +163,8 @@ class WinMain(QtGui.QMainWindow):
         if not first_time:
             self.removeDockWidget(self.win_debug_keyz.ui)
             self.win_debug_keyz.reload_ui()
-        self.addDockWidget(QtCore.Qt.DockWidgetArea.RightDockWidgetArea, self.win_debug_keyz.ui)
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.RightDockWidgetArea,
+                           self.win_debug_keyz.ui)
 
     def show_win_camera(self, first_time=False):
         if not first_time:

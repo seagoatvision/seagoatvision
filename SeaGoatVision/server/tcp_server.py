@@ -86,10 +86,9 @@ class ClientHandler:
     def handle(self):
         while not self.done:
             try:
-                _ = self.conn.recv(BUFFER_SIZE)
+                self.conn.recv(BUFFER_SIZE)
             except:
                 time.sleep(1)
-                pass  # Do noting if no data is received
 
             # if not data: break
             # print "received data:", data

@@ -170,8 +170,8 @@ class FilterChain(object):
             if param_name:
                 return o_filter.get_params(param_name=param_name)
             return o_filter.get_params()
-        return [(o_filter.get_name(), o_filter.get_params()) for o_filter in
-                self.filters]
+        return [(filter_obj.get_name(), filter_obj.get_params()) for filter_obj
+                in self.filters]
 
     def __getitem__(self, index):
         return self.filters[index]
