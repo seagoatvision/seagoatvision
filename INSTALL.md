@@ -33,17 +33,17 @@ Do this command and continue with Ubuntu section.
 
 #### Ubuntu :
 	sudo apt-get install python python-numpy python-scipy python-opencv python-pyside python-qt4 python-imaging libopencv-dev python-pip ffmpeg
-	sudo pip install jsonrpclib-pelix pyzmq
+	sudo pip install -r requirements.txt
 
 #### Fedora :
 	sudo yum install python numpy scipy opencv-python python-pyside PyQt4 python-pillow-qt opencv-devel python-pip ffmpeg czmq-devel
-	sudo pip install jsonrpclib-pelix pyzmq
+	sudo pip install -r requirements.txt
 
 #### Arch Linux :
 Don't forget to active the "community" repository. See https://wiki.archlinux.org/index.php/Pacman
 
 	yaourt -S python2 python2-numpy python2-scipy opencv python2-pyside python2-pyqt python2-imaging python2-pip ffmpeg zeromq
-	sudo pip2 install jsonrpclib-pelix pyzmq
+	sudo pip2 install -r requirements.txt
 
 #### Windows :
 Install the following dependencies:
@@ -58,7 +58,7 @@ Install the following dependencies:
  - pip:		https://github.com/simpleservices/app_report-python/wiki/How-to-install-pip-on-Windows
  - ffmpeg:	http://ffmpeg.zeranoe.com/builds/	# Install the static version
 
-	pip install jsonrpclib-pelix pyzmq
+	pip install -r requirements.txt
 
 #### Mac OSX :
 Start by installing Xcode command-line tools. On 10.9 Mavericks, this is as straightforward as entering this line in a terminal:
