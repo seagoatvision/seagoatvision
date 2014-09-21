@@ -55,6 +55,7 @@ class Firewire(MediaStreaming):
         self.key_auto_param = "-auto"
         self.reference_param = {"power": self._power,
                                 "transmission": self._transmission}
+        self.ignore_param = ["angle"]
 
         fps = 15
         self.sleep_time = 1 / 15.0
@@ -431,6 +432,8 @@ class Firewire(MediaStreaming):
         if not self.camera or param.get_is_lock():
             return False
         param_name = param.get_name()
+        if param_name in self.ignore_param:
+            return True
         value = param.get()
 
         if update_object_param:
