@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/seagoatvision/seagoatvision.svg?branch=develop)](https://travis-ci.org/seagoatvision/seagoatvision)
+[![Stories in Ready](https://badge.waffle.io/seagoatvision/seagoatvision.png?label=ready&title=Ready)](http://waffle.io/seagoatvision/seagoatvision)
 
 SeaGoatVision
 =============
