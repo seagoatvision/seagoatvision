@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/seagoatvision/seagoatvision.svg?branch=develop)](https://travis-ci.org/seagoatvision/seagoatvision)
 [![Stories in Ready](https://badge.waffle.io/seagoatvision/seagoatvision.png?label=ready&title=Ready)](http://waffle.io/seagoatvision/seagoatvision)
+[![Stories in Progress](https://badge.waffle.io/seagoatvision/seagoatvision.png?label=In Progress&title=In Progress)](http://waffle.io/seagoatvision/seagoatvision)
 
 SeaGoatVision
 =============
@@ -33,11 +34,11 @@ Read LICENSE file.
 
 Contact information
 -------------------
-Go on website https://github.com/Octets/SeaGoatVision and create an issue.
+Go on website https://github.com/seagoatvision/seagoatvision and create an issue.
 
 Known bugs
 ----------
-The bugs is showing in issues of the project : https://github.com/Octets/SeaGoatVision/issues?labels=bug&page=1&state=open
+The bugs is showing in issues of the project : https://github.com/seagoatvision/seagoatvision/issues?labels=bug&page=1&state=open
 
 Troubleshooting
 ---------------
