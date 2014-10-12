@@ -20,22 +20,29 @@
 Parameter is used by filter and client. This is public variable with specific
 type of filter.
 Filter must not modify Param.
+
 Different type :
- - INT : integer. Can have min or max value. Can use table of specific value.
- - FLOAT : float. Same of INT, but use float.
- - BOOL : boolean. Only True or False.
- - STRING : string.
+    - INT : integer. Can have min or max value. Can use table of specific value.
+    - FLOAT : float. Same of INT, but use float.
+    - BOOL : boolean. Only True or False.
+    - STRING : string.
 
 TIPS :
- - You want only EVEN number for your gaussian blur?
-    lst_gauss_value = [i for i in range(100) if not(i % 2)]
-    kern_gauss_blur = Param("kern_gauss_blur", 4, lst_value=lst_gauss_value)
- - In this example, we can't access to -1 because of min.
-    p = Param("f", 2, min_v=1, max_v=19, lst_value=[-1,2,4,6,10])
- - We can use a threshold value. In this situation, we have two value.
-  The value is always the low value and the threshold_high is the high value.
-    p = Param("f", 2, min_v=1, max_v=8, threshold=5)
- - When value is None, you can use it like a trigger.
+    - You want only EVEN number for your gaussian blur?
+
+>>> lst_gauss_value = [i for i in range(100) if not(i % 2)]
+>>> kern_gauss_blur = Param("kern_gauss_blur", 4, lst_value=lst_gauss_value)
+
+    - In this example, we can't access to -1 because of min.
+
+>>> p = Param("f", 2, min_v=1, max_v=19, lst_value=[-1,2,4,6,10])
+
+    - We can use a threshold value. In this situation, we have two value. The value is always the low value and the threshold_high is the high value.
+
+>>> p = Param("f", 2, min_v=1, max_v=8, threshold=5)
+
+    - When value is None, you can use it like a trigger.
+
 """
 from SeaGoatVision.commons import log
 import types
@@ -46,7 +53,8 @@ logger = log.get_logger(__name__)
 
 
 class Param(object):
-    """Param autodetect basic type
+    """
+    Param autodetect basic type
     force_type need to be a <type>
     If you want specific type, cast it to basic type and use force_type
     Param manager type : None, unicode, bool, str, int, long and float

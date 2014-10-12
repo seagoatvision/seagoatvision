@@ -5,7 +5,7 @@
 .pydevproject
 .settings
 .idea
-.orig 
+.orig
 
 # C++ filter
 *.so
@@ -28,6 +28,9 @@ var
 sdist
 develop-eggs
 .installed.cfg
+
+# Doc
+doc/build
 
 # Installer logs
 pip-log.txt
