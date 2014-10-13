@@ -276,11 +276,14 @@ class CmdHandler:
         # print "media: " + media.__class__.__name__
 
         if not media:
+            log.print_function(
+                logger.error, "The media %s not exist." % media_name)
             return False
         if media.is_media_video():
             log.print_function(
                 logger.error,
-                "Cannot start record to a media media %s." % media_name)
+                "Cannot start record to a media %s, \
+                because it's video type." % media_name)
             return False
         if self._is_keep_alive_media:
             media.add_observer(self._keep_alive_media)
@@ -290,11 +293,13 @@ class CmdHandler:
         self._post_command_(locals())
         media = self._get_media(media_name=media_name)
         if not media:
+            log.print_function(
+                logger.error, "The media %s not exist." % media_name)
             return False
         if media.is_media_video():
             log.print_function(
                 logger.error,
-                "Cannot stop record to a media media %s." %
+                "Cannot stop record to a media %s." %
                 media_name)
             return False
         status = media.stop_record()
