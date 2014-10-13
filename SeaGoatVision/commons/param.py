@@ -22,7 +22,8 @@ type of filter.
 Filter must not modify Param.
 
 Different type :
-    - INT : integer. Can have min or max value. Can use table of specific value.
+    - INT : integer. Can have min or max value. Can use table of specific \
+value.
     - FLOAT : float. Same of INT, but use float.
     - BOOL : boolean. Only True or False.
     - STRING : string.
@@ -37,7 +38,8 @@ TIPS :
 
 >>> p = Param("f", 2, min_v=1, max_v=19, lst_value=[-1,2,4,6,10])
 
-    - We can use a threshold value. In this situation, we have two value. The value is always the low value and the threshold_high is the high value.
+    - We can use a threshold value. In this situation, we have two value. The \
+value is always the low value and the threshold_high is the high value.
 
 >>> p = Param("f", 2, min_v=1, max_v=8, threshold=5)
 
