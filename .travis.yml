@@ -10,6 +10,6 @@ install:
   - "pip2 install -r requirements.txt"
   - "pip2 install flake8"
 script:
-  - python2 -m flake8 --ignore="E721" --exclude="SeaGoatVision/server/cpp/cpp_code.py,SeaGoatVision/server/cpp/create_module.py" SeaGoatVision
+  - make test
 notifications:
   email: false

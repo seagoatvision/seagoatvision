@@ -17,27 +17,9 @@
 
 # This Makefile manage filter in cpp situate in folder filters.
 # Build is done into directory build
-.PHONY : filter third_party clean_python clean_third_party clean doc test
+.PHONY : pep8
 
-all: third_party filter
+all: pep8
 
-doc:
-	-make -C doc html
-
-test:
-	make -C test
-
-filter:
-	./filters/build_cpp_filter.py
-
-third_party:
-	-make -C thirdparty
-
-clean_python:
-	find . -type f -name '*.pyc' -exec rm {} \;
-
-clean_third_party:
-	-make -C thirdparty clean
-
-clean: clean_python clean_third_party
-	-rm -Rf ./build
+pep8:
+	cd ..; python2 -m flake8 --ignore="E721" --exclude="SeaGoatVision/server/cpp/cpp_code.py,SeaGoatVision/server/cpp/create_module.py" SeaGoatVision
