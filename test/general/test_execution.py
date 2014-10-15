@@ -30,17 +30,13 @@ def test_run_and_stop_server():
     """
     child = pexpect.spawn(SERVER_PATH, timeout=20)
     str_attempt = "Waiting command"
-    expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
-    index = child.expect(expected, timeout=5)
-    assert not index
+    _expect(child, str_attempt, 5)
 
     # server is running. Send a sigterm
     p = psutil.Process(child.pid)
     child.terminate()
     str_attempt = "Close SeaGoat. See you later!"
-    expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
-    index = child.expect(expected, timeout=3)
-    assert not index
+    _expect(child, str_attempt, 3)
 
     # be sure it's close
     assert p
@@ -61,11 +57,7 @@ def test_is_not_connected_cli():
     """
     child = pexpect.spawn(CLIENT_PATH + " cli", timeout=3)
     str_attempt = "Connection refused"
-    # TODO show why when failure
-    expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
-    index = child.expect(expected, timeout=2)
-    # print(child.before)
-    assert not index
+    _expect(child, str_attempt, 3)
 
 
 def test_is_connected_cli():
@@ -76,3 +68,15 @@ def test_is_connected_cli():
     # server = _run_server()
     # client = _run_cli()
     pass
+
+
+def _expect(child, str_attempt, timeout):
+    expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
+    index = child.expect(expected, timeout=timeout)
+    if index:
+        print(child.before)
+        if index == 1:
+            print("Process is finished")
+        else:
+            print("Cannot find str %s" % str_attempt)
+    assert not index
