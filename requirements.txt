@@ -1,2 +1,8 @@
 jsonrpclib-pelix
 pyzmq
+flake8
+nose2
+psutil
+sphinx
+pexpect
+psutil

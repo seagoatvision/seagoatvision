@@ -1,4 +1,0 @@
-flake8
-nose2
-psutil
-sphinx

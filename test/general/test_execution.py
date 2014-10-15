@@ -19,8 +19,10 @@
 
 import subprocess
 import psutil
+import pexpect
 
 SERVER_PATH = '../server.py'
+CLIENT_PATH = '../client.py'
 
 
 def test_run_and_stop_server():
@@ -29,6 +31,19 @@ def test_run_and_stop_server():
     """
     subp = _run_server()
     assert _kill_server(subp, timeout=5)
+
+
+def test_is_not_connected_cli():
+    """
+    Start the client cli and check if not connected.
+    :return:
+    """
+    child = pexpect.spawn(CLIENT_PATH + " cli", timeout=3)
+    str_attempt = "Connection refused"
+    expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
+    index = child.expect(expected, timeout=2)
+    # print(child.before)
+    assert not index
 
 
 def _run_server():

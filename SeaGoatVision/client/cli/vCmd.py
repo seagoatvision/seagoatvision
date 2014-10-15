@@ -39,6 +39,7 @@ class VCmd(cmd.Cmd):
             stdout=stdout)
         self.quiet = quiet
         self.controller = ctr
+        self.local = local
 
         if self.quiet:
             self.prompt = ""
@@ -46,6 +47,13 @@ class VCmd(cmd.Cmd):
     #
     # List of command
     #
+    def do_exit(self, line):
+        if self.local:
+            self.controller.close()
+        else:
+            print("Cannot close remote server.")
+        return True
+
     def do_is_connected(self, line):
         if not self.quiet:
             if self.controller.is_connected():
