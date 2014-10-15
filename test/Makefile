@@ -26,9 +26,10 @@ pep8:
 	@echo "Test pep8"
 	@echo ""
 	cd ..; python2 -m flake8 --ignore="E721" --exclude="SeaGoatVision/server/cpp/cpp_code.py,SeaGoatVision/server/cpp/create_module.py" SeaGoatVision
+	python2 -m flake8 general
 
 nose:
 	@echo ""
 	@echo "Python test"
 	@echo ""
-	nose2 -s general
+	nose2 -s general test_execution

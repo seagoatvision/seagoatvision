@@ -19,6 +19,24 @@ Param
     :undoc-members:
     :show-inheritance:
 
+Test
+====
+Each commit start a test in Travis : https://travis-ci.org/seagoatvision/seagoatvision
+
+To run a test, do at root of the project:
+    make test
+
+The test contain:
+
+* Compilation of the SeagoatVision
+* Pep8 verification
+* General test
+
+.. automodule:: test.general.test_execution
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Indices and tables
 ==================
 

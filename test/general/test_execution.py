@@ -19,12 +19,14 @@
 
 import subprocess
 import psutil
-import time
 
 SERVER_PATH = '../server.py'
 
 
 def test_run_and_stop_server():
+    """
+    The test will start and stop the server
+    """
     subp = _run_server()
     assert _kill_server(subp, timeout=5)
 

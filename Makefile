@@ -22,12 +22,12 @@
 all: third_party filter
 
 doc:
-	-make -C doc html
+	make -C doc html
 
 # the test include make the plateform
-test: all
+test: all doc
 	@echo ""
-	@echo "Compilation pass"
+	@echo "Compilation pass with documentation"
 	@echo ""
 	make -C test
 
