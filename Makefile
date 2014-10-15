@@ -24,7 +24,11 @@ all: third_party filter
 doc:
 	-make -C doc html
 
-test:
+# the test include make the plateform
+test: all
+	@echo ""
+	@echo "Compilation pass"
+	@echo ""
 	make -C test
 
 filter:
