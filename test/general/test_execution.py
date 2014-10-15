@@ -22,27 +22,31 @@ import pexpect
 
 SERVER_PATH = '../server.py'
 CLIENT_PATH = '../client.py'
+DELAY_START_SERVER = 30
+DELAY_CLOSE_SERVER = 10
+DELAY_START_CLI = 10
 
 
 def test_run_and_stop_server():
     """
     The test will start and stop the server
     """
-    child = pexpect.spawn(SERVER_PATH, timeout=20)
+    child = pexpect.spawn(SERVER_PATH,
+                          timeout=DELAY_START_SERVER + DELAY_CLOSE_SERVER * 2)
     str_attempt = "Waiting command"
-    _expect(child, str_attempt, 5)
+    _expect(child, str_attempt, DELAY_START_SERVER)
 
     # server is running. Send a sigterm
     p = psutil.Process(child.pid)
     child.terminate()
     str_attempt = "Close SeaGoat. See you later!"
-    _expect(child, str_attempt, 3)
+    _expect(child, str_attempt, DELAY_CLOSE_SERVER)
 
     # be sure it's close
     assert p
     # print(p.status())
     try:
-        status = p.wait(3)
+        status = p.wait(DELAY_CLOSE_SERVER)
         # test if status is sigterm
         assert not status
     except psutil.TimeoutExpired:
@@ -55,9 +59,9 @@ def test_is_not_connected_cli():
     Start the client cli and check if not connected.
     :return:
     """
-    child = pexpect.spawn(CLIENT_PATH + " cli", timeout=3)
+    child = pexpect.spawn(CLIENT_PATH + " cli", timeout=DELAY_START_CLI)
     str_attempt = "Connection refused"
-    _expect(child, str_attempt, 3)
+    _expect(child, str_attempt, DELAY_START_CLI)
 
 
 def test_is_connected_cli():
