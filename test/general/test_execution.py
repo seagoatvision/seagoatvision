@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import subprocess
 import psutil
 import pexpect
 
@@ -29,8 +28,30 @@ def test_run_and_stop_server():
     """
     The test will start and stop the server
     """
-    subp = _run_server()
-    assert _kill_server(subp, timeout=5)
+    child = pexpect.spawn(SERVER_PATH, timeout=20)
+    str_attempt = "Waiting command"
+    expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
+    index = child.expect(expected, timeout=5)
+    assert not index
+
+    # server is running. Send a sigterm
+    p = psutil.Process(child.pid)
+    child.terminate()
+    str_attempt = "Close SeaGoat. See you later!"
+    expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
+    index = child.expect(expected, timeout=3)
+    assert not index
+
+    # be sure it's close
+    assert p
+    # print(p.status())
+    try:
+        status = p.wait(3)
+        # test if status is sigterm
+        assert not status
+    except psutil.TimeoutExpired:
+        p.kill()
+        raise
 
 
 def test_is_not_connected_cli():
@@ -40,44 +61,18 @@ def test_is_not_connected_cli():
     """
     child = pexpect.spawn(CLIENT_PATH + " cli", timeout=3)
     str_attempt = "Connection refused"
+    # TODO show why when failure
     expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
     index = child.expect(expected, timeout=2)
     # print(child.before)
     assert not index
 
 
-def _run_server():
+def test_is_connected_cli():
     """
-    Execute a process
-    :return: subprocess of server.py
+    Start the client cli and check if connected.
+    :return:
     """
-    return subprocess.Popen([SERVER_PATH])
-
-
-def _kill_server(subp, timeout=0):
-    """
-    Kill the server with a timeout
-    :param supb: subprocess of the server
-    :param timeout: second from creation to wait to kill the process.
-    :return: success
-    """
-    delay_terminate = 3
-    assert subp
-    p = psutil.Process(subp.pid)
-    assert p
-    try:
-        print("Waiting max %s seconds to kill %s" % (timeout, SERVER_PATH))
-        status = p.wait(timeout)
-        raise Exception("Process already stopped - return code %s" % status)
-    except psutil.TimeoutExpired:
-        print("terminate")
-        p.terminate()
-    # test if really terminate
-    try:
-        status = p.wait(delay_terminate)
-        # test if status is sigterm
-        assert status == 15
-    except psutil.TimeoutExpired:
-        p.kill()
-        raise
-    return True
+    # server = _run_server()
+    # client = _run_cli()
+    pass
