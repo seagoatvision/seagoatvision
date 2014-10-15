@@ -24,6 +24,9 @@ all: third_party filter
 doc:
 	make -C doc html
 
+view_doc: doc
+	firefox doc/build/html/index.html
+
 # the test include make the plateform
 test: all doc
 	@echo ""
