@@ -39,18 +39,6 @@ def start_server(timeout=0):
     return child
 
 
-def start_server(timeout=0):
-    """
-
-    :param timeout: timeout to kill server
-    :return: spawn process of server
-    """
-    child = pexpect.spawn(SERVER_PATH, timeout=timeout)
-    str_attempt = "Waiting command"
-    expect(child, str_attempt, DELAY_START_SERVER)
-    return child
-
-
 def stop_server(child):
     """
 
