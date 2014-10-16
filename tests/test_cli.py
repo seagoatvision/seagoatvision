@@ -37,11 +37,62 @@ def test_is_not_connected_cli():
     common_test_tools.expect(child, str_attempt, DELAY_START_CLI)
 
 
-def test_is_connected_cli():
+# TODO test autocomplete in cli
+# TODO the cli is suppose to receive real with no other comment
+# TODO remove "Nombre de ligne"
+# TODO test when close server before closing cli (or sending new command)
+def test_cli_cmd():
     """
-    Start the client cli and check if connected.
-    :return:
+    Test functionality of all command in cli
     """
-    # server = _run_server()
-    # client = _run_cli()
-    pass
+    # 15 minutes, it's enough for all command test
+    total_delay_life_sgv = 60 * 15
+    srv = common_test_tools.start_server(timeout=total_delay_life_sgv)
+
+    # open client
+    cli = _open_cli()
+
+    def _test_is_connected_cli():
+        cmd = "is_connected"
+        str_attempt_cli = "You are connected."
+        str_attempt_srv = "Request : %s" % cmd
+        cli.sendline(cmd)
+        common_test_tools.expect(cli, str_attempt_cli, DELAY_START_CLI)
+        common_test_tools.expect(srv, str_attempt_srv, DELAY_START_CLI)
+        print("Success %s" % cmd)
+
+    def _test_get_media_list():
+        cmd = "get_media_list"
+        # attempt at minimum the media File
+        str_attempt_cli = "File"
+        str_attempt_srv = "Request : %s" % cmd
+        cli.sendline(cmd)
+        common_test_tools.expect(cli, str_attempt_cli, DELAY_START_CLI)
+        common_test_tools.expect(srv, str_attempt_srv, DELAY_START_CLI)
+        print("Success %s" % cmd)
+
+    def _test_exit():
+        cmd = "exit"
+        # exit not exist in the server, attempt a message that precise we
+        # cannot close the remote server
+        # TODO validate the server has no more print and receive a timeout
+        str_attempt_cli = "Cannot close remote server."
+        # str_attempt_srv = "Request : %s" % cmd
+        cli.sendline(cmd)
+        common_test_tools.expect(cli, str_attempt_cli, DELAY_START_CLI)
+        # common_test_tools.expect(srv, str_attempt_srv, DELAY_START_CLI)
+        print("Success %s" % cmd)
+
+    # test all command
+    _test_is_connected_cli()
+    _test_get_media_list()
+    _test_exit()
+
+    common_test_tools.stop_server(srv)
+
+
+def _open_cli():
+    child = pexpect.spawn(CLIENT_PATH + " cli", timeout=DELAY_START_CLI)
+    str_attempt = "(Cmd)"
+    common_test_tools.expect(child, str_attempt, DELAY_START_CLI)
+    return child

@@ -17,13 +17,60 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import psutil
 import pexpect
 
 SERVER_PATH = '../server.py'
 CLIENT_PATH = '../client.py'
 DELAY_START_SERVER = 30
 DELAY_CLOSE_SERVER = 10
-DELAY_START_CLI = 10
+DELAY_START_CLI = 3
+
+
+def start_server(timeout=0):
+    """
+
+    :param timeout: timeout to kill server
+    :return: spawn process of server
+    """
+    child = pexpect.spawn(SERVER_PATH, timeout=timeout)
+    str_attempt = "Waiting command"
+    expect(child, str_attempt, DELAY_START_SERVER)
+    return child
+
+
+def start_server(timeout=0):
+    """
+
+    :param timeout: timeout to kill server
+    :return: spawn process of server
+    """
+    child = pexpect.spawn(SERVER_PATH, timeout=timeout)
+    str_attempt = "Waiting command"
+    expect(child, str_attempt, DELAY_START_SERVER)
+    return child
+
+
+def stop_server(child):
+    """
+
+    :param child:
+    """
+    p = psutil.Process(child.pid)
+    child.terminate()
+    str_attempt = "Close SeaGoat. See you later!"
+    expect(child, str_attempt, DELAY_CLOSE_SERVER)
+
+    # be sure it's close
+    assert p
+    # print(p.status())
+    try:
+        status = p.wait(DELAY_CLOSE_SERVER)
+        # test if status is sigterm
+        assert not status
+    except psutil.TimeoutExpired:
+        p.kill()
+        raise
 
 
 def expect(child, str_attempt, timeout):
