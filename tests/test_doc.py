@@ -16,3 +16,19 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from subprocess import STDOUT, check_output as qx
+
+CMD_GENERATE_DOC = "make SPHINXOPTS='-q' -C ../doc html"
+TIMEOUT_DOC = 60
+
+
+def test_generate_doc():
+    """
+    Generate documentation and search warning or error message
+    """
+    output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True,
+                timeout=TIMEOUT_DOC).decode('utf8')
+    print(output)
+    assert "WARNING" not in output
+    assert "ERROR" not in output

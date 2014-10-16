@@ -29,6 +29,16 @@ Operating instructions
 ----------------------
 Read HOWTO.md file.
 
+Test
+----
+Run all test:
+
+	make test
+
+Run a specific test, example with cli test:
+
+	make -C tests cli
+
 License
 -------
 Read LICENSE file.

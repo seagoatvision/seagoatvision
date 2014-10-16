@@ -17,19 +17,31 @@
 
 # This Makefile manage filter in cpp situate in folder filters.
 # Build is done into directory build
-.PHONY : pep8 nose
+.PHONY : pep8 execution cli
 
-all: pep8 nose
+all: pep8 doc execution cli
 
 pep8:
 	@echo ""
 	@echo "Test pep8"
 	@echo ""
 	cd ..; python2 -m flake8 --ignore="E721" --exclude="SeaGoatVision/server/cpp/cpp_code.py,SeaGoatVision/server/cpp/create_module.py" SeaGoatVision
-	python2 -m flake8 general
+	python2 -m flake8 .
 
-nose:
+execution:
 	@echo ""
-	@echo "Python test"
+	@echo "Python test - execution"
 	@echo ""
-	nose2 -s general test_execution
+	python2 -m nose2 test_execution
+
+cli:
+	@echo ""
+	@echo "Python test - cli"
+	@echo ""
+	python2 -m nose2 test_cli
+
+doc:
+	@echo ""
+	@echo "Python test - doc"
+	@echo ""
+	python3 -m nose2 test_doc

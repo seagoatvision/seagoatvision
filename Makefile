@@ -28,11 +28,11 @@ view_doc: doc
 	firefox doc/build/html/index.html
 
 # the test include make the plateform
-test: all doc
+test: all
 	@echo ""
-	@echo "Compilation pass with documentation"
+	@echo "Compilation Success"
 	@echo ""
-	make -C test
+	make -C tests
 
 filter:
 	./filters/build_cpp_filter.py

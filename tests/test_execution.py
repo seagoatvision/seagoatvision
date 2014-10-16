@@ -19,28 +19,29 @@
 
 import psutil
 import pexpect
+import common_test_tools
 
-SERVER_PATH = '../server.py'
-CLIENT_PATH = '../client.py'
-DELAY_START_SERVER = 30
-DELAY_CLOSE_SERVER = 10
-DELAY_START_CLI = 10
+SERVER_PATH = common_test_tools.SERVER_PATH
+CLIENT_PATH = common_test_tools.CLIENT_PATH
+DELAY_START_SERVER = common_test_tools.DELAY_START_SERVER
+DELAY_CLOSE_SERVER = common_test_tools.DELAY_CLOSE_SERVER
+DELAY_START_CLI = common_test_tools.DELAY_START_CLI
 
 
 def test_run_and_stop_server():
     """
     The test will start and stop the server
     """
-    child = pexpect.spawn(SERVER_PATH,
-                          timeout=DELAY_START_SERVER + DELAY_CLOSE_SERVER * 2)
+    total_delay_life_sgv = DELAY_START_SERVER + DELAY_CLOSE_SERVER * 2
+    child = pexpect.spawn(SERVER_PATH, timeout=total_delay_life_sgv)
     str_attempt = "Waiting command"
-    _expect(child, str_attempt, DELAY_START_SERVER)
+    common_test_tools.expect(child, str_attempt, DELAY_START_SERVER)
 
     # server is running. Send a sigterm
     p = psutil.Process(child.pid)
     child.terminate()
     str_attempt = "Close SeaGoat. See you later!"
-    _expect(child, str_attempt, DELAY_CLOSE_SERVER)
+    common_test_tools.expect(child, str_attempt, DELAY_CLOSE_SERVER)
 
     # be sure it's close
     assert p
@@ -52,35 +53,3 @@ def test_run_and_stop_server():
     except psutil.TimeoutExpired:
         p.kill()
         raise
-
-
-def test_is_not_connected_cli():
-    """
-    Start the client cli and check if not connected.
-    :return:
-    """
-    child = pexpect.spawn(CLIENT_PATH + " cli", timeout=DELAY_START_CLI)
-    str_attempt = "Connection refused"
-    _expect(child, str_attempt, DELAY_START_CLI)
-
-
-def test_is_connected_cli():
-    """
-    Start the client cli and check if connected.
-    :return:
-    """
-    # server = _run_server()
-    # client = _run_cli()
-    pass
-
-
-def _expect(child, str_attempt, timeout):
-    expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
-    index = child.expect(expected, timeout=timeout)
-    if index:
-        print(child.before)
-        if index == 1:
-            print("Process is finished")
-        else:
-            print("Cannot find str %s" % str_attempt)
-    assert not index
