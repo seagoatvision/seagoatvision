@@ -44,4 +44,4 @@ doc:
 	@echo ""
 	@echo "Python test - doc"
 	@echo ""
-	python3 -m nose2 test_doc
+	python2 -m nose2 test_doc

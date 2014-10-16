@@ -25,10 +25,12 @@ TIMEOUT_DOC = 60
 
 def test_generate_doc():
     """
-    Generate documentation and search warning or error message
+    Generate documentation and search warning or error message.
     """
-    output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True,
-                timeout=TIMEOUT_DOC).decode('utf8')
+    # TODO implement a timeout if documentation not finish. works in python3.4
+    # output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True,
+    #             timeout=TIMEOUT_DOC).decode('utf8')
+    output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True).decode('utf8')
     print(output)
     assert "WARNING" not in output
     assert "ERROR" not in output
