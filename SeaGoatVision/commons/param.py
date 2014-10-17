@@ -64,6 +64,7 @@ class Param(object):
 
     def __init__(self, name, value, min_v=None, max_v=None, lst_value=None,
                  force_type=None, thres_h=None, serialize=None, is_lock=False):
+        # TODO add group in param constructor
         # constant float
         self.delta_float = 0.0001
         # Exception, can serialize
@@ -385,7 +386,7 @@ class Param(object):
         self.set_lock(False)
 
     def set_lock(self, is_lock):
-        self._is_lock = is_lock
+        self._is_lock = bool(is_lock)
         self._send_notification()
 
     def get_is_lock(self):

@@ -16,28 +16,12 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import os
 
-import cv2
-
-from SeaGoatVision.commons.param import Param
-from SeaGoatVision.server.core.filter import Filter
-
-
-class Rectangle(Filter):
-
-    """Draw a black rectangle on top of the image"""
-
-    def __init__(self):
-        Filter.__init__(self)
-        self.x1 = Param('x1', 0, max_v=65535, min_v=0)
-        self.y1 = Param('y1', 0, max_v=65535, min_v=0)
-        self.x2 = Param('x2', 100, max_v=65535, min_v=0)
-        self.y2 = Param('y2', 100, max_v=65535, min_v=0)
-
-    def execute(self, image):
-        cv2.rectangle(image,
-                      (self.x1.get(), self.y1.get()),
-                      (self.x2.get(), self.y2.get()),
-                      (0, 0, 0),
-                      cv2.cv.CV_FILLED)
-        return image
+# PYTHON FILTERS IMPORT
+for f in os.listdir(os.path.dirname(__file__)):
+    if not f.endswith(".py") or f == "__init__.py":
+        continue
+    filename, _ = os.path.splitext(f)
+    code = 'from %(module)s import *' % {'module': filename}
+    exec(code)

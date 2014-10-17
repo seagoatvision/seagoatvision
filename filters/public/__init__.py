@@ -18,6 +18,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 from convert_color import *
 from detection import *
+from draw import *
 from example import *
 from filters import *
 from obstacle import *
