@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/seagoatvision/seagoatvision.svg?branch=develop)](https://travis-ci.org/seagoatvision/seagoatvision)
 [![Stories in Ready](https://badge.waffle.io/seagoatvision/seagoatvision.png?label=ready&title=Ready)](http://waffle.io/seagoatvision/seagoatvision)
 [![Stories in Progress](https://badge.waffle.io/seagoatvision/seagoatvision.png?label=In Progress&title=In Progress)](http://waffle.io/seagoatvision/seagoatvision)
-[![Coverage Status](https://img.shields.io/coveralls/seagoatvision/seagoatvision.svg)](https://coveralls.io/r/seagoatvision/seagoatvision?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/seagoatvision/seagoatvision/badge.png?branch=develop)](https://coveralls.io/r/seagoatvision/seagoatvision?branch=develop)
 
 SeaGoatVision
 =============
