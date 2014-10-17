@@ -28,11 +28,11 @@ view_doc: doc
 	firefox doc/build/html/index.html
 
 # the test include make the plateform
-test: all
-	@echo ""
-	@echo "Compilation Success"
-	@echo ""
-	make -C tests
+test:
+	if [ -a .coverage ]; then rm .coverage; fi;
+	python2 -m flake8 --ignore="E721" --exclude="SeaGoatVision/server/cpp/cpp_code.py,SeaGoatVision/server/cpp/create_module.py" SeaGoatVision
+	python2 -m nose2 --with-coverage
+	coverage2 combine
 
 filter:
 	./filters/build_cpp_filter.py

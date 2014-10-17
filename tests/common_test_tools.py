@@ -20,8 +20,8 @@
 import psutil
 import pexpect
 
-SERVER_PATH = '../server.py'
-CLIENT_PATH = '../client.py'
+SERVER_PATH = './server.py'
+CLIENT_PATH = './client.py'
 DELAY_START_SERVER = 30
 DELAY_CLOSE_SERVER = 10
 DELAY_START_CLI = 3

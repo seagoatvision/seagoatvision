@@ -19,7 +19,7 @@
 
 from subprocess import STDOUT, check_output as qx
 
-CMD_GENERATE_DOC = "make SPHINXOPTS='-q' -C ../doc html"
+CMD_GENERATE_DOC = "make SPHINXOPTS='-q' -C ./doc html"
 TIMEOUT_DOC = 60
 
 
