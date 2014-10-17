@@ -34,6 +34,9 @@ test:
 	python2 -m nose2 --with-coverage
 	coverage2 combine
 
+view_test: test
+	firefox htmlcov/index.html
+
 filter:
 	./filters/build_cpp_filter.py
 

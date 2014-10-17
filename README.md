@@ -39,7 +39,11 @@ Run all test:
 
 Run a specific test, example with cli test:
 
-	make -C tests cli
+	python2 -m nose2 tests.test_cli
+
+To see coverage report
+
+	coverage report -m
 
 License
 -------

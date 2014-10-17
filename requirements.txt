@@ -5,3 +5,4 @@ nose2[coverage-plugin]
 psutil
 sphinx
 pexpect
+coverage
