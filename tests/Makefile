@@ -32,16 +32,16 @@ execution:
 	@echo ""
 	@echo "Python test - execution"
 	@echo ""
-	python2 -m nose2 test_execution
+	python2 -m nose2 test_execution --with-coverage
 
 cli:
 	@echo ""
 	@echo "Python test - cli"
 	@echo ""
-	python2 -m nose2 test_cli
+	python2 -m nose2 test_cli --with-coverage
 
 doc:
 	@echo ""
 	@echo "Python test - doc"
 	@echo ""
-	python2 -m nose2 test_doc
+	python2 -m nose2 test_doc --with-coverage

@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/seagoatvision/seagoatvision.svg?branch=develop)](https://travis-ci.org/seagoatvision/seagoatvision)
 [![Stories in Ready](https://badge.waffle.io/seagoatvision/seagoatvision.png?label=ready&title=Ready)](http://waffle.io/seagoatvision/seagoatvision)
 [![Stories in Progress](https://badge.waffle.io/seagoatvision/seagoatvision.png?label=In Progress&title=In Progress)](http://waffle.io/seagoatvision/seagoatvision)
+[![Coverage Status](https://img.shields.io/coveralls/seagoatvision/seagoatvision.svg)](https://coveralls.io/r/seagoatvision/seagoatvision)
 
 SeaGoatVision
 =============
@@ -13,10 +14,11 @@ SeaGoatVision is a computer vision system running into a server.
 Actually, this platform is used to doing robotic.
 
 Principal feature :
+
  - Manage multiple client and media
  - Run filterchain
  - Control filter by parameters
- - Give environnement for debug and create filter
+ - Give environment for debug and create filter
  - Run in local or in remote
  - Can send message to other platform
  - Execute Python and C++ filters
@@ -53,7 +55,7 @@ The bugs is showing in issues of the project : https://github.com/seagoatvision/
 
 Troubleshooting
 ---------------
-The project is only supported in python 2.7, because opencv is not supported in python 3 at this moment.
+The project is only supported in python 2.7, because OpenCV is not supported in python 3 at this moment.
 
 Credits
 -------
