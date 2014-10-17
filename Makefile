@@ -17,7 +17,7 @@
 
 # This Makefile manage filter in cpp situate in folder filters.
 # Build is done into directory build
-.PHONY : filter third_party clean_python clean_third_party clean doc test
+.PHONY : doc view_doc test view_test filter third_party clean_python clean_third_party clean_coverage clean_doc clean
 
 all: third_party filter
 
@@ -44,10 +44,18 @@ third_party:
 	-make -C thirdparty
 
 clean_python:
-	find . -type f -name '*.pyc' -exec rm {} \;
+	-find . -type f -name '*.pyc' -exec rm {} \;
+	-find . -type d -name '__pycache__' -exec rm -R {} \;
 
 clean_third_party:
 	-make -C thirdparty clean
 
-clean: clean_python clean_third_party
+clean_coverage:
+	-rm .coverage
+	-rm -R htmlcov
+
+clean_doc:
+	-rm -R doc/build
+
+clean: clean_python clean_third_party clean_coverage clean_doc
 	-rm -Rf ./build
