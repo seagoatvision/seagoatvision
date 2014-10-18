@@ -1,5 +1,27 @@
 [run]
 branch = True
 parallel = True
-omit = tests/*
-       thirdparty/*
+show_missing = True
+
+[report]
+omit =
+    tests/*
+    thirdparty/*
+    # Graphic client is not tested with nose2
+    SeaGoatVision/client/analysis/*
+    SeaGoatVision/client/qt/*
+    SeaGoatVision/client/web/*
+
+    # Don't test private section
+    filters/private/*
+    configurations/private/*
+
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
+
+    # Don't complain about missing debug-only code:
+    def __repr__
+
+    # Don't complain if non-runnable code isn't run:
+    if __name__ == '__main__':

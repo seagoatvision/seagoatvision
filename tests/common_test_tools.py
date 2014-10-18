@@ -40,7 +40,7 @@ def start_server(timeout=0):
     str_attempt = "Waiting command"
     str_not_attempt = SERVER_START_DUPLICATE_STR
     expect(child, str_attempt, not_expect_value=str_not_attempt,
-                timeout=DELAY_START_SERVER)
+           timeout=DELAY_START_SERVER)
     return child
 
 
@@ -74,15 +74,20 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
     :param timeout: limit of time to expect the string
     """
     msg_err_wrong_param = "Param %s need to be a str or list."
-    fail_msg = "Receive \"%s\" and expected \"%s\"."
+    fail_msg = "Receive \"%s\" and expected \"%s\". Debug %s Index %s."
+    min_index_expected = 1
+    expected = [pexpect.EOF, pexpect.TIMEOUT]
+
     if not expect_value:
         raise Exception("Param expect_value is empty.")
-    elif type(expect_value) is str:
+    elif type(expect_value) is str or \
+                    expect_value is pexpect.EOF or \
+                    expect_value is pexpect.TIMEOUT:
         expect_value = [expect_value]
     elif type(expect_value) is not list:
         raise Exception(msg_err_wrong_param % "expect_value")
 
-    expected = expect_value[:]
+    expected += expect_value
     max_index_expected = len(expect_value) - 1
 
     if not_expect_value:
@@ -92,10 +97,9 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
             raise Exception(msg_err_wrong_param % "not_expect_value")
         expected += not_expect_value
 
-    expected += [pexpect.EOF, pexpect.TIMEOUT]
-
     index = child.expect(expected, timeout=timeout)
-    if index > max_index_expected:
+    # Error if not inside the expected index
+    if min_index_expected > index < max_index_expected:
         print(child.before)
         val = expect_value[0] if len(expect_value) == 1 else expect_value
-        raise Exception(fail_msg % (expected[index], val))
+        raise Exception(fail_msg % (expected[index], val, expected, index))

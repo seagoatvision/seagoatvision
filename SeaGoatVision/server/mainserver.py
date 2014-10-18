@@ -64,7 +64,7 @@ def run(p_port=None, verbose=False, config_path=None):
     except BaseException as e:
         log.printerror_stacktrace(logger, e)
         server.close()
-        sys.exit(1)
+        raise
 
     # Start the server
     logger.info('Serving on port %s - pid %s', port, pid)
