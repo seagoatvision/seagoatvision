@@ -24,8 +24,7 @@ SeaGoatVision Server
 import fileinput
 
 
-def run(ctr, subscriber, local=False,
-        host="localhost", port=8090, quiet=False):
+def run(ctr, subscriber, local=False, host="localhost", port=8090):
     # TODO implement using subscriber
     from vCmd import VCmd
     VCmd(
@@ -33,6 +32,5 @@ def run(ctr, subscriber, local=False,
         stdin=fileinput.input(),
         local=local,
         host=host,
-        port=port,
-        quiet=quiet).cmdloop()
+        port=port).cmdloop()
     return 0

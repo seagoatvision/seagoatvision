@@ -20,12 +20,14 @@
 """
 Description : Implementation of cmd, command line of python
 """
-# SOURCE of this code about the commande line :
+# SOURCE of this code about the command line :
 # http://www.doughellmann.com/PyMOTW/cmd/
 import cmd
+import socket
 from SeaGoatVision.commons import log
 
 logger = log.get_logger(__name__)
+DISCONNECTED_MSG = "You are disconnected"
 
 
 class VCmd(cmd.Cmd):
@@ -51,13 +53,23 @@ class VCmd(cmd.Cmd):
         return True
 
     def do_is_connected(self, line):
-        if self.controller.is_connected():
+        try:
+            status = self.controller.is_connected()
+        except socket.error:
+            status = False
+
+        if status:
             logger.info("You are connected.")
         else:
-            logger.info("You are disconnected.")
+            logger.info(DISCONNECTED_MSG)
 
     def do_get_filter_list(self, line):
-        lst_filter = self.controller.get_filter_list()
+        try:
+            lst_filter = self.controller.get_filter_list()
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
+            return
+
         if lst_filter is not None:
             logger.info(
                 "Nombre de ligne %s, tableau : %s" %
@@ -66,7 +78,12 @@ class VCmd(cmd.Cmd):
             logger.info("No filterlist")
 
     def do_get_filterchain_list(self, line):
-        lst_filter_chain = self.controller.get_filterchain_list()
+        try:
+            lst_filter_chain = self.controller.get_filterchain_list()
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
+            return
+
         lst_name = [item.get("name") for item in lst_filter_chain]
         if lst_filter_chain is not None:
             logger.info(
@@ -79,12 +96,18 @@ class VCmd(cmd.Cmd):
     def do_add_output_observer(self, line):
         # execution_name
         param = line.split()
-        self.controller.add_output_observer(param[0])
+        try:
+            self.controller.add_output_observer(param[0])
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
 
     def do_stop_output_observer(self, line):
         # execution_name
         param = line.split()
-        self.controller.remove_output_observer(param[0])
+        try:
+            self.controller.remove_output_observer(param[0])
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
 
     def do_start_filterchain_execution(self, line):
         # execution_name, media_name, filterchain_name
@@ -103,13 +126,19 @@ class VCmd(cmd.Cmd):
             if filterchain == "None":
                 filterchain = ""
 
-        self.controller.start_filterchain_execution(
-            name, media, filterchain, None, False)
+        try:
+            self.controller.start_filterchain_execution(
+                name, media, filterchain, None, False)
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
 
     def do_stop_filterchain_execution(self, line):
         # execution_name
         param = line.split()
-        self.controller.stop_filterchain_execution(param[0])
+        try:
+            self.controller.stop_filterchain_execution(param[0])
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
 
     def do_start_record(self, line):
         # media_name
@@ -117,15 +146,27 @@ class VCmd(cmd.Cmd):
         path = None
         if len(param) > 1:
             path = param[1]
-        self.controller.start_record(param[0], path)
+
+        try:
+            self.controller.start_record(param[0], path)
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
 
     def do_stop_record(self, line):
         # media_name
         param = line.split()
-        self.controller.stop_record(param[0])
+        try:
+            self.controller.stop_record(param[0])
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
 
     def do_get_media_list(self, line):
-        lst_media = self.controller.get_media_list()
+        try:
+            lst_media = self.controller.get_media_list()
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
+            return
+
         if lst_media is not None:
             logger.info("Media list : %s" % lst_media)
         else:

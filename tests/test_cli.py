@@ -58,10 +58,14 @@ class TestCliNotConnected(unittest2.TestCase):
         ctt.stop_server(child_srv)
 
         # test is disconnected
-        cmd = "is_connected"
-        str_attempt_cli = CLI_DISCONNECTED_MSG
-        child_cli.sendline(cmd)
-        ctt.expect(child_cli, str_attempt_cli, timeout=DELAY_START_CLI)
+        lst_cmd = ["get_media_list", "stop_record", "start_record",
+                   "stop_filterchain_execution", "start_filterchain_execution",
+                   "stop_output_observer", "add_output_observer",
+                   "get_filterchain_list", "get_filter_list", "is_connected"]
+        for cmd in lst_cmd:
+            str_attempt_cli = CLI_DISCONNECTED_MSG
+            child_cli.sendline(cmd + " test")
+            ctt.expect(child_cli, str_attempt_cli, timeout=DELAY_START_CLI)
 
         # test is connected
         child_srv = ctt.start_server(timeout=total_delay_life_sgv)

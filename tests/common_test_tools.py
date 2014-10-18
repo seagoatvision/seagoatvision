@@ -101,7 +101,7 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
 
     index = child.expect(expected, timeout=timeout)
     # Error if not inside the expected index
-    if min_index_expected > index < max_index_expected:
+    if min_index_expected > index or index < max_index_expected:
         print(child.before)
         val = expect_value[0] if len(expect_value) == 1 else expect_value
         raise Exception(fail_msg % (expected[index], val, expected, index))
