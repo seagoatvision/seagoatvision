@@ -25,6 +25,9 @@ CLIENT_PATH = './client.py'
 DELAY_START_SERVER = 30
 DELAY_CLOSE_SERVER = 10
 DELAY_START_CLI = 3
+SERVER_START_STR = "Waiting command"
+SERVER_START_DUPLICATE_STR = "SeaGoat already run with the pid"
+SERVER_CLOSE_STR = "Close SeaGoat. See you later!"
 
 
 def start_server(timeout=0):
@@ -35,45 +38,64 @@ def start_server(timeout=0):
     """
     child = pexpect.spawn(SERVER_PATH, timeout=timeout)
     str_attempt = "Waiting command"
-    expect(child, str_attempt, DELAY_START_SERVER)
+    str_not_attempt = SERVER_START_DUPLICATE_STR
+    expect(child, str_attempt, not_expect_value=str_not_attempt,
+                timeout=DELAY_START_SERVER)
     return child
 
 
 def stop_server(child):
-    """
-
-    :param child:
-    """
     p = psutil.Process(child.pid)
-    child.terminate()
-    str_attempt = "Close SeaGoat. See you later!"
-    expect(child, str_attempt, DELAY_CLOSE_SERVER)
-
     # be sure it's close
-    assert p
-    # print(p.status())
+    if not p:
+        raise Exception("Process is None")
+    if not p.is_running():
+        raise Exception("Process is not running.")
+
+    child.terminate()
+    expect(child, SERVER_CLOSE_STR, timeout=DELAY_CLOSE_SERVER)
+
     try:
         status = p.wait(DELAY_CLOSE_SERVER)
-        # test if status is sigterm
-        assert not status
+        if status:
+            raise Exception(
+                "Server wasn't kill with SIGINT or didn't close normally, \
+                signal %s." % status)
     except psutil.TimeoutExpired:
         p.kill()
-        raise
+        raise psutil.TimeoutExpired
 
 
-def expect(child, str_attempt, timeout):
+def expect(child, expect_value, not_expect_value=None, timeout=0):
     """
     Use pexpect.expect and print the execution if not expected.
     :param child: pexpect child
     :param str_attempt: searching str in execution
     :param timeout: limit of time to expect the string
     """
-    expected = [str_attempt, pexpect.EOF, pexpect.TIMEOUT]
+    msg_err_wrong_param = "Param %s need to be a str or list."
+    fail_msg = "Receive \"%s\" and expected \"%s\"."
+    if not expect_value:
+        raise Exception("Param expect_value is empty.")
+    elif type(expect_value) is str:
+        expect_value = [expect_value]
+    elif type(expect_value) is not list:
+        raise Exception(msg_err_wrong_param % "expect_value")
+
+    expected = expect_value[:]
+    max_index_expected = len(expect_value) - 1
+
+    if not_expect_value:
+        if type(not_expect_value) is str:
+            not_expect_value = [not_expect_value]
+        elif type(not_expect_value) is not list:
+            raise Exception(msg_err_wrong_param % "not_expect_value")
+        expected += not_expect_value
+
+    expected += [pexpect.EOF, pexpect.TIMEOUT]
+
     index = child.expect(expected, timeout=timeout)
-    if index:
+    if index > max_index_expected:
         print(child.before)
-        if index == 1:
-            print("Error, process is already close, receive pexpect.OEF.")
-        else:
-            print("Cannot find expected str : %s" % str_attempt)
-    assert not index
+        val = expect_value[0] if len(expect_value) == 1 else expect_value
+        raise Exception(fail_msg % (expected[index], val))

@@ -32,7 +32,7 @@ The test contain:
 * Pep8 verification
 * General test
 
-.. automodule:: tests.test_execution
+.. automodule:: tests.test_server_execution
     :members:
     :undoc-members:
     :show-inheritance:

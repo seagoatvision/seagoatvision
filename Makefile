@@ -24,17 +24,20 @@ all: third_party filter
 doc:
 	make -C doc html
 
-view_doc: doc
+view_doc:
 	firefox doc/build/html/index.html
 
 # the test include make the plateform
 test:
 	if [ -a .coverage ]; then rm .coverage; fi;
+	@echo "Flake 8 test"
 	python2 -m flake8 --ignore="E721" --exclude="SeaGoatVision/server/cpp/cpp_code.py,SeaGoatVision/server/cpp/create_module.py" SeaGoatVision
-	python2 -m nose2 --with-coverage
+	@echo "Nose2 test"
+	python2 -m nose2 --with-coverage -v
 	coverage2 combine
 
-view_test: test
+view_test:
+	coverage html -d htmlcov
 	firefox htmlcov/index.html
 
 filter:

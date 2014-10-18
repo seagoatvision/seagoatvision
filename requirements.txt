@@ -6,3 +6,4 @@ psutil
 sphinx
 pexpect
 coverage
+unittest2
