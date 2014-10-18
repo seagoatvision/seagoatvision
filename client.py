@@ -35,11 +35,10 @@ def run_qt(ctr, subscriber, local=False, host="localhost", port=8090):
     return run(ctr, subscriber, local=local, host=host, port=port)
 
 
-def run_cli(ctr, subscriber, local=False, host="localhost", port=8090,
-            quiet=False):
+def run_cli(ctr, subscriber, local=False, host="localhost", port=8090):
     from SeaGoatVision.client.cli.cli import run
 
-    return run(ctr, subscriber, local=local, host=host, port=port, quiet=quiet)
+    return run(ctr, subscriber, local=local, host=host, port=port)
 
 
 if __name__ == '__main__':
@@ -53,10 +52,6 @@ if __name__ == '__main__':
         '--local',
         action='store_true',
         help='Run server local, else remote.')
-    parser.add_argument(
-        '--quiet',
-        action='store_true',
-        help='Only print important information.')
     parser.add_argument(
         '--host',
         type=str,
@@ -99,6 +94,6 @@ if __name__ == '__main__':
     elif sInterface == "cli":
         sys.exit(
             run_cli(ctr, subscriber, local=args.local, host=args.host,
-                    port=args.port, quiet=args.quiet))
+                    port=args.port))
     else:
         logger.error("Interface not supported : %s", sInterface)

@@ -39,7 +39,7 @@ pip-log.txt
 .coverage
 .tox
 nosetests.xml
-htmlcov
+doc/build/htmlcov
 
 #Translations
 *.mo

@@ -32,13 +32,14 @@ test:
 	if [ -a .coverage ]; then rm .coverage; fi;
 	@echo "Flake 8 test"
 	python2 -m flake8 --ignore="E721" --exclude="SeaGoatVision/server/cpp/cpp_code.py,SeaGoatVision/server/cpp/create_module.py" SeaGoatVision
+	python2 -m flake8 tests
 	@echo "Nose2 test"
 	python2 -m nose2 --with-coverage -v
 	coverage2 combine
 
 view_test:
-	coverage html -d htmlcov
-	firefox htmlcov/index.html
+	coverage html -d doc/build/htmlcov
+	firefox doc/build/htmlcov/index.html
 
 filter:
 	./filters/build_cpp_filter.py
@@ -55,7 +56,7 @@ clean_third_party:
 
 clean_coverage:
 	-rm .coverage
-	-rm -R htmlcov
+	-rm -R doc/build/htmlcov
 
 clean_doc:
 	-rm -R doc/build

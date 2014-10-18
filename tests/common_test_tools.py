@@ -41,11 +41,13 @@ def start_server(timeout=0):
     str_not_attempt = SERVER_START_DUPLICATE_STR
     expect(child, str_attempt, not_expect_value=str_not_attempt,
            timeout=DELAY_START_SERVER)
+    # print("Start server pid %s" % child.pid)
     return child
 
 
 def stop_server(child):
     p = psutil.Process(child.pid)
+    # print("Stop server pid %s" % child.pid)
     # be sure it's close
     if not p:
         raise Exception("Process is None")
@@ -80,9 +82,9 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
 
     if not expect_value:
         raise Exception("Param expect_value is empty.")
-    elif type(expect_value) is str or \
-                    expect_value is pexpect.EOF or \
-                    expect_value is pexpect.TIMEOUT:
+    elif type(expect_value) is str \
+            or expect_value is pexpect.EOF \
+            or expect_value is pexpect.TIMEOUT:
         expect_value = [expect_value]
     elif type(expect_value) is not list:
         raise Exception(msg_err_wrong_param % "expect_value")
@@ -103,3 +105,4 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
         print(child.before)
         val = expect_value[0] if len(expect_value) == 1 else expect_value
         raise Exception(fail_msg % (expected[index], val, expected, index))
+        # print expected

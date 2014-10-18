@@ -31,18 +31,14 @@ logger = log.get_logger(__name__)
 class VCmd(cmd.Cmd):
 
     def __init__(self, ctr, local=False, host="localhost", port=8090,
-                 completekey='tab', stdin=None, stdout=None, quiet=False):
+                 completekey='tab', stdin=None, stdout=None):
         cmd.Cmd.__init__(
             self,
             completekey=completekey,
             stdin=stdin,
             stdout=stdout)
-        self.quiet = quiet
         self.controller = ctr
         self.local = local
-
-        if self.quiet:
-            self.prompt = ""
 
     #
     # List of command
@@ -55,11 +51,10 @@ class VCmd(cmd.Cmd):
         return True
 
     def do_is_connected(self, line):
-        if not self.quiet:
-            if self.controller.is_connected():
-                logger.info("You are connected.")
-            else:
-                logger.info("You are disconnected.")
+        if self.controller.is_connected():
+            logger.info("You are connected.")
+        else:
+            logger.info("You are disconnected.")
 
     def do_get_filter_list(self, line):
         lst_filter = self.controller.get_filter_list()
@@ -73,15 +68,13 @@ class VCmd(cmd.Cmd):
     def do_get_filterchain_list(self, line):
         lst_filter_chain = self.controller.get_filterchain_list()
         lst_name = [item.get("name") for item in lst_filter_chain]
-        if not self.quiet:
-            if lst_filter_chain is not None:
-                logger.info(
-                    "Nombre de ligne %s, tableau : %s" %
-                    (len(lst_filter_chain), lst_name))
-            else:
-                logger.info("No lst_filter_chain")
+        if lst_filter_chain is not None:
+            logger.info(
+                "Nombre de ligne %s, tableau : %s" %
+                (len(lst_filter_chain), lst_name))
         else:
-            logger.info(lst_name)
+            logger.info("No lst_filter_chain")
+        # logger.info(lst_name)
 
     def do_add_output_observer(self, line):
         # execution_name
@@ -133,13 +126,11 @@ class VCmd(cmd.Cmd):
 
     def do_get_media_list(self, line):
         lst_media = self.controller.get_media_list()
-        if not self.quiet:
-            if lst_media is not None:
-                logger.info("Media list : %s" % lst_media)
-            else:
-                logger.info("No media")
+        if lst_media is not None:
+            logger.info("Media list : %s" % lst_media)
         else:
-            logger.info(lst_media)
+            logger.info("No media")
+        # logger.info(lst_media)
 
     def do_EOF(self, line):
         # Redo last command
