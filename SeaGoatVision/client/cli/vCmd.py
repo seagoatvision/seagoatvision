@@ -46,9 +46,7 @@ class VCmd(cmd.Cmd):
     # List of command
     #
     def do_exit(self, line):
-        if self.local:
-            self.controller.close()
-        else:
+        if not self.local:
             print("Cannot close remote server.")
         return True
 
@@ -70,12 +68,7 @@ class VCmd(cmd.Cmd):
             logger.error(DISCONNECTED_MSG)
             return
 
-        if lst_filter is not None:
-            logger.info(
-                "Nombre de ligne %s, tableau : %s" %
-                (len(lst_filter), lst_filter))
-        else:
-            logger.info("No filterlist")
+        logger.info(lst_filter)
 
     def do_get_filterchain_list(self, line):
         try:
@@ -84,14 +77,7 @@ class VCmd(cmd.Cmd):
             logger.error(DISCONNECTED_MSG)
             return
 
-        lst_name = [item.get("name") for item in lst_filter_chain]
-        if lst_filter_chain is not None:
-            logger.info(
-                "Nombre de ligne %s, tableau : %s" %
-                (len(lst_filter_chain), lst_name))
-        else:
-            logger.info("No lst_filter_chain")
-        # logger.info(lst_name)
+        logger.info([item.get("name") for item in lst_filter_chain])
 
     def do_add_output_observer(self, line):
         # execution_name
@@ -167,11 +153,7 @@ class VCmd(cmd.Cmd):
             logger.error(DISCONNECTED_MSG)
             return
 
-        if lst_media is not None:
-            logger.info("Media list : %s" % lst_media)
-        else:
-            logger.info("No media")
-        # logger.info(lst_media)
+        logger.info(lst_media)
 
     def do_EOF(self, line):
         # Redo last command

@@ -28,6 +28,7 @@ DELAY_START_CLI = 3
 SERVER_START_STR = "Waiting command"
 SERVER_START_DUPLICATE_STR = "SeaGoat already run with the pid"
 SERVER_CLOSE_STR = "Close SeaGoat. See you later!"
+CLI_CMD_READY = "(Cmd)"
 
 
 def start_server(timeout=0):
@@ -42,6 +43,13 @@ def start_server(timeout=0):
     expect(child, str_attempt, not_expect_value=str_not_attempt,
            timeout=DELAY_START_SERVER)
     # print("Start server pid %s" % child.pid)
+    return child
+
+
+def start_cli(cmd, timeout=0):
+    child = pexpect.spawn(cmd, timeout=timeout)
+    str_attempt = CLI_CMD_READY
+    expect(child, str_attempt, timeout=DELAY_START_CLI)
     return child
 
 

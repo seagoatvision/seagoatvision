@@ -23,6 +23,7 @@ import unittest2
 
 SERVER_PATH = ctt.SERVER_PATH
 CLIENT_CLI_PATH = ctt.CLIENT_PATH + " cli"
+CLIENT_CLI_LOCAL_PATH = ctt.CLIENT_PATH + " cli --local"
 DELAY_START_SERVER = ctt.DELAY_START_SERVER
 DELAY_CLOSE_SERVER = ctt.DELAY_CLOSE_SERVER
 DELAY_START_CLI = ctt.DELAY_START_CLI
@@ -83,8 +84,6 @@ class TestCli(unittest2.TestCase):
     Test functionality of all command in cli
     """
     # TODO test autocomplete in cli
-    # TODO the cli is suppose to receive real with no other comment
-    # TODO remove "Nombre de ligne"
     # TODO test when close server before closing cli (or sending new command)
     @classmethod
     def setUpClass(cls):
@@ -93,10 +92,7 @@ class TestCli(unittest2.TestCase):
         cls._srv = ctt.start_server(timeout=total_delay_life_sgv)
 
         # open client
-        child = pexpect.spawn(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
-        str_attempt = "(Cmd)"
-        ctt.expect(child, str_attempt, timeout=DELAY_START_CLI)
-        cls._cli = child
+        cls._cli = ctt.start_cli(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
 
     @classmethod
     def tearDownClass(cls):
@@ -105,19 +101,40 @@ class TestCli(unittest2.TestCase):
     def test_is_connected(self):
         cmd = "is_connected"
         str_attempt_cli = CLI_CONNECTED_MSG
-        str_attempt_srv = SERVER_RECEIVE_CMD % cmd
-        self._cli.sendline(cmd)
-        ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
-        ctt.expect(self._srv, str_attempt_srv, timeout=DELAY_START_CLI)
+        self._generic_cli_test(cmd, str_attempt_cli)
 
     def test_get_media_list(self):
         cmd = "get_media_list"
         # attempt at minimum the media File
         str_attempt_cli = "File"
-        str_attempt_srv = SERVER_RECEIVE_CMD % cmd
-        self._cli.sendline(cmd)
-        ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
-        ctt.expect(self._srv, str_attempt_srv, timeout=DELAY_START_CLI)
+        self._generic_cli_test(cmd, str_attempt_cli)
+
+    def test_get_filter_list(self):
+        cmd = "get_filter_list"
+        # attempt one type of filter
+        str_attempt_cli = "YUV2BGR"
+        self._generic_cli_test(cmd, str_attempt_cli)
+
+    def test_get_filterchain_list(self):
+        cmd = "get_filterchain_list"
+        # attempt one type of filterchain
+        str_attempt_cli = "Example"
+        self._generic_cli_test(cmd, str_attempt_cli)
+
+    def test_signal(self):
+        # open client
+        child = ctt.start_cli(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
+
+        # send SIGINT
+        child.kill(pexpect.signal.SIGINT)
+        ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
+
+        # open client
+        child = ctt.start_cli(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
+
+        # send SIGINT
+        child.kill(pexpect.signal.SIGTSTP)
+        ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
 
     def test_zzz_exit(self):
         # IMPORTANT, this test need to be executed at the end
@@ -126,7 +143,80 @@ class TestCli(unittest2.TestCase):
         # cannot close the remote server
         # TODO validate the server has no more print and receive a timeout
         str_attempt_cli = "Cannot close remote server."
-        # str_attempt_srv = SERVER_RECEIVE_CMD % cmd
         self._cli.sendline(cmd)
         ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
-        # ctt.expect(self._srv, str_attempt_srv, timeout=DELAY_START_CLI)
+        ctt.expect(self._cli, pexpect.EOF, timeout=DELAY_START_CLI)
+
+    def _generic_cli_test(self, cmd, str_attempt_cli):
+        str_attempt_srv = SERVER_RECEIVE_CMD % cmd
+        self._cli.sendline(cmd)
+        ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
+        ctt.expect(self._srv, str_attempt_srv, timeout=DELAY_START_CLI)
+
+
+class TestCliLocal(unittest2.TestCase):
+    """
+    Test functionality of all command in cli
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        # 15 minutes, it's enough for all command test
+        total_delay_life_sgv = 60 * 15
+
+        # open client
+        cls._cli = ctt.start_cli(CLIENT_CLI_LOCAL_PATH,
+                                 timeout=total_delay_life_sgv)
+
+    def test_is_connected(self):
+        cmd = "is_connected"
+        str_attempt_cli = CLI_CONNECTED_MSG
+        self._generic_cli_test(cmd, str_attempt_cli)
+
+    def test_get_media_list(self):
+        cmd = "get_media_list"
+        # attempt at minimum the media File
+        str_attempt_cli = "File"
+        self._generic_cli_test(cmd, str_attempt_cli)
+
+    def test_get_filter_list(self):
+        cmd = "get_filter_list"
+        # attempt one type of filter
+        str_attempt_cli = "YUV2BGR"
+        self._generic_cli_test(cmd, str_attempt_cli)
+
+    def test_get_filterchain_list(self):
+        cmd = "get_filterchain_list"
+        # attempt one type of filterchain
+        str_attempt_cli = "Example"
+        self._generic_cli_test(cmd, str_attempt_cli)
+
+    def test_zzz_exit(self):
+        # IMPORTANT, this test need to be executed at the end
+        cmd = "exit"
+        # exit not exist in the server, attempt a message that precise we
+        # cannot close the remote server
+        # TODO validate the server has no more print and receive a timeout
+        self._cli.sendline(cmd)
+        ctt.expect(self._cli, pexpect.EOF, timeout=DELAY_START_CLI)
+
+    def _generic_cli_test(self, cmd, str_attempt_cli):
+        self._cli.sendline(cmd)
+        ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
+
+
+class TestCliSignalLocal(unittest2.TestCase):
+    def test_signal(self):
+        # open client
+        child = ctt.start_cli(CLIENT_CLI_LOCAL_PATH, timeout=DELAY_START_CLI)
+
+        # send SIGINT
+        child.kill(pexpect.signal.SIGINT)
+        ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
+
+        # open client
+        child = ctt.start_cli(CLIENT_CLI_LOCAL_PATH, timeout=DELAY_START_CLI)
+
+        # send SIGINT
+        child.kill(pexpect.signal.SIGTSTP)
+        ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)

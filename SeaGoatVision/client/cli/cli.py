@@ -27,10 +27,14 @@ import fileinput
 def run(ctr, subscriber, local=False, host="localhost", port=8090):
     # TODO implement using subscriber
     from vCmd import VCmd
-    VCmd(
-        ctr,
-        stdin=fileinput.input(),
-        local=local,
-        host=host,
-        port=port).cmdloop()
+    try:
+        VCmd(
+            ctr,
+            stdin=fileinput.input(),
+            local=local,
+            host=host,
+            port=port).cmdloop()
+    except KeyboardInterrupt:
+        pass
+    ctr.close()
     return 0
