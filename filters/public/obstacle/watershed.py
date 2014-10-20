@@ -1,4 +1,3 @@
-
 import cv2
 import numpy as np
 from scipy.ndimage import label
@@ -27,7 +26,6 @@ def segment_on_dt(a, img):
 
 
 class Watershed(Filter):
-
     def __init__(self):
         Filter.__init__(self)
 

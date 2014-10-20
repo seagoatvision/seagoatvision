@@ -6,16 +6,16 @@
 #
 # SeaGoatVision is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 try:
     from thirdparty.public.pydc1394 import video1394
 except:
@@ -268,8 +268,8 @@ class Firewire(MediaStreaming):
                 return self.actual_image
             else:
                 # logger.warning(
-                #    "Receive no more image from %s, timestamp %d" %
-                #    (self.get_name(), self.actual_timestamp))
+                # "Receive no more image from %s, timestamp %d" %
+                # (self.get_name(), self.actual_timestamp))
                 return
         # reinitilize all protection
         self.buffer_last_timestamp = False

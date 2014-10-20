@@ -42,6 +42,7 @@ class PoolParam(object):
             if dct:
                 for param in dct.values():
                     param.destroy()
+
         destroy_dct(self._dct_param)
         destroy_dct(self._dct_param_manual)
         destroy_dct(self._dct_shared_param)
@@ -52,6 +53,7 @@ class PoolParam(object):
             if dct:
                 for param in dct.values():
                     param.stop_pooling()
+
         stop_pooling(self._dct_param)
         stop_pooling(self._dct_param_manual)
         stop_pooling(self._dct_shared_param)

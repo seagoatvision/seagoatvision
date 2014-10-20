@@ -88,6 +88,7 @@ class TestCli(unittest2.TestCase):
     """
     Test functionality of all command in cli
     """
+
     @classmethod
     def setUpClass(cls):
         # 15 minutes, it's enough for all command test

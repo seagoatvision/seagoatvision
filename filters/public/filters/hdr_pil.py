@@ -6,7 +6,6 @@ import numpy as np
 
 
 class HDR(Filter):
-
     """High-dynamic-range_imaging with python PIL - works with files"""
 
     def __init__(self):

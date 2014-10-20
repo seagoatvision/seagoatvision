@@ -1,4 +1,3 @@
-
 from scipy import weave
 import cv
 import numpy
@@ -16,7 +15,6 @@ from SeaGoatVision.server.core.filter import Filter
 
 
 class ScipyExample(Filter):
-
     """Example on how to use scipy.weave inside filters.
         The code loop inside the entire image
         and reduce the value of each pixels by half"""

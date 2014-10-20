@@ -37,6 +37,7 @@ pip-log.txt
 
 # Unit test / coverage reports
 .coverage
+.coverage.*
 .tox
 nosetests.xml
 doc/build/htmlcov

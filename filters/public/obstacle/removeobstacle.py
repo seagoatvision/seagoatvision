@@ -1,4 +1,3 @@
-
 import cv2
 from cv2 import cv
 
@@ -7,7 +6,6 @@ from SeaGoatVision.server.core.filter import Filter
 
 
 class RemoveObstacle(Filter):
-
     """Remove obstacles from an image"""
 
     def __init__(self):

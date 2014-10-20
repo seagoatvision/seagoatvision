@@ -1,11 +1,9 @@
-
 import cv2
 import numpy as np
 from SeaGoatVision.server.core.filter import Filter
 
 
 class BGR2HSVManual(Filter):
-
     def __init__(self):
         Filter.__init__(self)
 

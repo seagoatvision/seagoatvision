@@ -29,7 +29,7 @@ def test_generate_doc():
     """
     # TODO implement a timeout if documentation not finish. works in python3.4
     # output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True,
-    #             timeout=TIMEOUT_DOC).decode('utf8')
+    # timeout=TIMEOUT_DOC).decode('utf8')
     output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True).decode('utf8')
     print(output)
     assert "WARNING" not in output
