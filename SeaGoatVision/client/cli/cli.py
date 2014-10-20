@@ -36,5 +36,8 @@ def run(ctr, subscriber, local=False, host="localhost", port=8090):
             port=port).cmdloop()
     except KeyboardInterrupt:
         pass
-    ctr.close()
+    except BaseException:
+        raise
+    finally:
+        ctr.close()
     return 0
