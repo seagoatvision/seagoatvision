@@ -16,6 +16,14 @@ omit =
     filters/private/*
     configurations/private/*
 
+    # Cannot test with hardware media
+    SeaGoatVision/server/media/implementation/firewire.py
+    SeaGoatVision/server/media/implementation/pygame_cam.py
+    SeaGoatVision/server/media/implementation/webcam.py
+    configurations/template_media/conf_firewire.py
+    configurations/template_media/conf_pygameCam.py
+    configurations/template_media/conf_webcam.py
+
 exclude_lines =
     # Have to re-enable the standard pragma
     pragma: no cover
@@ -28,3 +36,6 @@ exclude_lines =
 
     # Nop python
     pass
+
+    # Ignore graphic client
+    run_qt

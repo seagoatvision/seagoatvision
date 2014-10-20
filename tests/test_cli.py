@@ -31,7 +31,7 @@ SERVER_RECEIVE_CMD = "Request : %s"
 
 CLI_EXPECT_CONNECTED = "You are connected."
 CLI_EXPECT_DISCONNECTED = "You are disconnected."
-CLI_EXPECT_GET_MEDIA_LIST = "u'ipc': u'Streaming'"
+CLI_EXPECT_GET_MEDIA_LIST = "generator"
 CLI_EXPECT_GET_FILTER_LIST = "YUV2BGR"
 CLI_EXPECT_GET_FILTERCHAIN_LIST = "Example"
 CLI_EXPECT_EXIT = "Cannot close remote server."
@@ -113,8 +113,8 @@ class TestCli(unittest2.TestCase):
         # open client
         child = ctt.start_cli(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
 
-        # send SIGINT
-        child.kill(pexpect.signal.SIGTSTP)
+        # send SIGTERM
+        child.kill(pexpect.signal.SIGTERM)
         ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
 
     def test_01_is_connected(self):
@@ -148,7 +148,6 @@ class TestCli(unittest2.TestCase):
         cmd = "exit"
         # exit not exist in the server, attempt a message that precise we
         # cannot close the remote server
-        # TODO validate the server has no more print and receive a timeout
         str_attempt_cli = CLI_EXPECT_EXIT
         self._cli.sendline(cmd)
         ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
@@ -159,6 +158,7 @@ class TestCli(unittest2.TestCase):
         self._cli.sendline(cmd)
         ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
         ctt.expect(self._srv, str_attempt_srv, timeout=DELAY_START_CLI)
+        # print self._cli.before
 
 
 class TestCliLocal(unittest2.TestCase):
@@ -206,7 +206,6 @@ class TestCliLocal(unittest2.TestCase):
         cmd = "exit"
         # exit not exist in the server, attempt a message that precise we
         # cannot close the remote server
-        # TODO validate the server has no more print and receive a timeout
         self._cli.sendline(cmd)
         ctt.expect(self._cli, pexpect.EOF, timeout=DELAY_START_CLI)
 
@@ -227,6 +226,6 @@ class TestCliSignalLocal(unittest2.TestCase):
         # open client
         child = ctt.start_cli(CLIENT_CLI_LOCAL_PATH, timeout=DELAY_START_CLI)
 
-        # send SIGINT
-        child.kill(pexpect.signal.SIGTSTP)
+        # send SIGTERM
+        child.kill(pexpect.signal.SIGTERM)
         ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)

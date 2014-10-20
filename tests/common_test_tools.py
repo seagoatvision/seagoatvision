@@ -24,7 +24,7 @@ SERVER_PATH = './server.py'
 CLIENT_PATH = './client.py'
 DELAY_START_SERVER = 30
 DELAY_CLOSE_SERVER = 10
-DELAY_START_CLI = 3
+DELAY_START_CLI = 10
 SERVER_START_STR = "Waiting command"
 SERVER_START_DUPLICATE_STR = "SeaGoat already run with the pid"
 SERVER_CLOSE_STR = "Close SeaGoat. See you later!"
@@ -85,7 +85,7 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
     """
     msg_err_wrong_param = "Param %s need to be a str or list."
     fail_msg = "Receive \"%s\" and expected \"%s\". Debug %s Index %s."
-    min_index_expected = 1
+    min_index_expected = 2
     expected = [pexpect.EOF, pexpect.TIMEOUT]
 
     if not expect_value:
@@ -108,6 +108,8 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
         expected += not_expect_value
 
     index = child.expect(expected, timeout=timeout)
+    # print("Debug index %s, expected value %s, pass expected %s" % (
+    #     index, expected, expect_value))
     # Error if not inside the expected index
     if min_index_expected > index or index < max_index_expected:
         print(child.before)
