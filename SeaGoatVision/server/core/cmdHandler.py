@@ -65,6 +65,8 @@ class CmdHandler:
         self.notify_event_client = {}
         self.id_client_notify = 0
 
+        self._index_execution = 1
+
         self.publisher = self.resource.get_publisher()
 
         # launch command on start
@@ -111,6 +113,7 @@ class CmdHandler:
     # EXECUTION FILTER ################################
     #
     def start_filterchain_execution(
+            # TODO change start_filterchain_execution to start_execution
             self, execution_name, media_name, filterchain_name, file_name,
             is_client_manager):
         self._post_command_(locals())
@@ -130,6 +133,12 @@ class CmdHandler:
                 logger.error, "Filterchain %s not exist or contain error." %
                 filterchain_name)
             return False
+
+        if not execution_name:
+            execution_name = "Execution-%s" % self._index_execution
+            while self.dct_exec.get(execution_name, None):
+                self._index_execution += 1
+                execution_name = "Execution-%s" % self._index_execution
 
         # Exception, if not media_name, we take the default media_name from the
         # filterchain
@@ -167,9 +176,10 @@ class CmdHandler:
 
         for o_filter in filterchain.get_filter():
             o_filter.set_publisher(publisher)
-        return True
+        return execution_name
 
     def stop_filterchain_execution(self, execution_name):
+        # TODO change stop_filterchain_execution to stop_execution
         self._post_command_(locals())
         execution = self.dct_exec.get(execution_name, None)
 

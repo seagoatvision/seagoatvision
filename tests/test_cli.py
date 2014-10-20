@@ -35,7 +35,8 @@ CLI_EXPECT_GET_MEDIA_LIST = "generator"
 CLI_EXPECT_GET_FILTER_LIST = "YUV2BGR"
 CLI_EXPECT_GET_FILTERCHAIN_LIST = "Example"
 CLI_EXPECT_EXIT = "Cannot close remote server."
-CLI_EXPECT = ""
+
+EXECUTION_NAME_EXAMPLE = "Example"
 
 
 class TestCliNotConnected(unittest2.TestCase):
@@ -141,9 +142,26 @@ class TestCli(unittest2.TestCase):
         self._generic_cli_test(cmd, str_attempt_cli)
 
     def test_05_start_filterchain_execution(self):
-        pass
+        cmd = "start_filterchain_execution"
+        args = EXECUTION_NAME_EXAMPLE + " " + CLI_EXPECT_GET_MEDIA_LIST
+        # attempt one type of filterchain
+        str_attempt_cli = CLI_EXPECT_GET_FILTERCHAIN_LIST
+        self._generic_cli_test(cmd, str_attempt_cli, args=args)
 
-    def test_06_exit(self):
+    def test_06_get_execution_list(self):
+        cmd = "get_execution_list"
+        # attempt one type of filterchain
+        str_attempt_cli = EXECUTION_NAME_EXAMPLE
+        self._generic_cli_test(cmd, str_attempt_cli)
+
+    def test_07_stop_filterchain_execution(self):
+        cmd = "stop_filterchain_execution"
+        # attempt one type of filterchain
+        args = EXECUTION_NAME_EXAMPLE
+        str_attempt_cli = EXECUTION_NAME_EXAMPLE
+        self._generic_cli_test(cmd, str_attempt_cli, args=args)
+
+    def test_08_exit(self):
         # IMPORTANT, this test need to be executed at the end
         cmd = "exit"
         # exit not exist in the server, attempt a message that precise we
@@ -153,11 +171,15 @@ class TestCli(unittest2.TestCase):
         ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
         ctt.expect(self._cli, pexpect.EOF, timeout=DELAY_START_CLI)
 
-    def _generic_cli_test(self, cmd, str_attempt_cli):
+    def _generic_cli_test(self, cmd, str_attempt_cli, args=None):
         str_attempt_srv = SERVER_RECEIVE_CMD % cmd
-        self._cli.sendline(cmd)
-        ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
-        ctt.expect(self._srv, str_attempt_srv, timeout=DELAY_START_CLI)
+        not_expect_value = ["WARNING", "ERROR"]
+        cmds = cmd if not args else cmd + " " + args
+        self._cli.sendline(cmds)
+        ctt.expect(self._cli, str_attempt_cli,
+                   not_expect_value=not_expect_value, timeout=DELAY_START_CLI)
+        ctt.expect(self._srv, str_attempt_srv,
+                   not_expect_value=not_expect_value, timeout=DELAY_START_CLI)
         # print self._cli.before
 
 
@@ -199,9 +221,26 @@ class TestCliLocal(unittest2.TestCase):
         self._generic_cli_test(cmd, str_attempt_cli)
 
     def test_05_start_filterchain_execution(self):
-        pass
+        cmd = "start_filterchain_execution"
+        args = EXECUTION_NAME_EXAMPLE + " " + CLI_EXPECT_GET_MEDIA_LIST
+        # attempt one type of filterchain
+        str_attempt_cli = CLI_EXPECT_GET_FILTERCHAIN_LIST
+        self._generic_cli_test(cmd, str_attempt_cli, args=args)
 
-    def test_06_exit(self):
+    def test_06_get_execution_list(self):
+        cmd = "get_execution_list"
+        # attempt one type of filterchain
+        str_attempt_cli = EXECUTION_NAME_EXAMPLE
+        self._generic_cli_test(cmd, str_attempt_cli)
+
+    def test_07_stop_filterchain_execution(self):
+        cmd = "stop_filterchain_execution"
+        # attempt one type of filterchain
+        args = EXECUTION_NAME_EXAMPLE
+        str_attempt_cli = EXECUTION_NAME_EXAMPLE
+        self._generic_cli_test(cmd, str_attempt_cli, args=args)
+
+    def test_08_exit(self):
         # IMPORTANT, this test need to be executed at the end
         cmd = "exit"
         # exit not exist in the server, attempt a message that precise we
@@ -209,9 +248,12 @@ class TestCliLocal(unittest2.TestCase):
         self._cli.sendline(cmd)
         ctt.expect(self._cli, pexpect.EOF, timeout=DELAY_START_CLI)
 
-    def _generic_cli_test(self, cmd, str_attempt_cli):
-        self._cli.sendline(cmd)
-        ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
+    def _generic_cli_test(self, cmd, str_attempt_cli, args=None):
+        not_expect_value = ["WARNING", "ERROR"]
+        cmds = cmd if not args else cmd + " " + args
+        self._cli.sendline(cmds)
+        ctt.expect(self._cli, str_attempt_cli,
+                   not_expect_value=not_expect_value, timeout=DELAY_START_CLI)
 
 
 class TestCliSignalLocal(unittest2.TestCase):

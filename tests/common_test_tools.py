@@ -58,9 +58,9 @@ def stop_server(child):
     # print("Stop server pid %s" % child.pid)
     # be sure it's close
     if not p:
-        raise Exception("Process is None")
+        raise BaseException("Process is None")
     if not p.is_running():
-        raise Exception("Process is not running.")
+        raise BaseException("Process is not running.")
 
     child.terminate()
     expect(child, SERVER_CLOSE_STR, timeout=DELAY_CLOSE_SERVER)
@@ -68,7 +68,7 @@ def stop_server(child):
     try:
         status = p.wait(DELAY_CLOSE_SERVER)
         if status:
-            raise Exception(
+            raise BaseException(
                 "Server wasn't kill with SIGINT or didn't close normally, \
                 signal %s." % status)
     except psutil.TimeoutExpired:
@@ -89,13 +89,13 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
     expected = [pexpect.EOF, pexpect.TIMEOUT]
 
     if not expect_value:
-        raise Exception("Param expect_value is empty.")
+        raise BaseException("Param expect_value is empty.")
     elif type(expect_value) is str \
             or expect_value is pexpect.EOF \
             or expect_value is pexpect.TIMEOUT:
         expect_value = [expect_value]
     elif type(expect_value) is not list:
-        raise Exception(msg_err_wrong_param % "expect_value")
+        raise BaseException(msg_err_wrong_param % "expect_value")
 
     expected += expect_value
     max_index_expected = len(expect_value) - 1
@@ -104,7 +104,7 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
         if type(not_expect_value) is str:
             not_expect_value = [not_expect_value]
         elif type(not_expect_value) is not list:
-            raise Exception(msg_err_wrong_param % "not_expect_value")
+            raise BaseException(msg_err_wrong_param % "not_expect_value")
         expected += not_expect_value
 
     index = child.expect(expected, timeout=timeout)
@@ -114,5 +114,5 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
     if min_index_expected > index or index < max_index_expected:
         print(child.before)
         val = expect_value[0] if len(expect_value) == 1 else expect_value
-        raise Exception(fail_msg % (expected[index], val, expected, index))
+        raise BaseException(fail_msg % (expected[index], val, expected, index))
         # print expected

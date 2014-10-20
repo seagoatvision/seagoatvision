@@ -41,6 +41,9 @@ class VCmd(cmd.Cmd):
         self.controller = ctr
         self.local = local
 
+        self._media_list = self.controller.get_media_list()
+        self._filterchain_list = self.controller.get_filterchain_list()
+
     #
     # List of command
     #
@@ -100,6 +103,8 @@ class VCmd(cmd.Cmd):
         name = ""
         if len(param):
             name = param[0]
+            if name == "None":
+                name = None
         media = ""
         if len(param) > 1:
             media = param[1]
@@ -117,13 +122,61 @@ class VCmd(cmd.Cmd):
         except socket.error:
             logger.error(DISCONNECTED_MSG)
 
+    def help_start_filterchain_execution(self):
+        info = ['start_filterchain_execution [name] [media] [filterchain]',
+                'For default value, use None.',
+                'Media and Filterchain can be auto-complete.']
+        print('\n'.join(info))
+
+    def complete_start_filterchain_execution(self, text, line, begidx, endidx):
+        param = line.split()
+        completions = None
+        if len(param) == 2 or (len(param) == 3 and line[-1] != ' '):
+            # auto-complete media
+            lst_media = self._media_list.keys()
+            if not text:
+                completions = lst_media[:]
+            else:
+                completions = [f for f in lst_media if
+                               f.startswith(text)]
+        elif len(param) == 3 or (len(param) == 4 and line[-1] != ' '):
+            # auto-complete filterchain
+            lst_filterchain = [f.get("name") for f in self._filterchain_list]
+            if not text:
+                completions = lst_filterchain
+            else:
+                completions = [f for f in lst_filterchain if
+                               f.startswith(text)]
+        return completions
+
     def do_stop_filterchain_execution(self, line):
         # execution_name
         param = line.split()
+        if not param:
+            logger.error("Missing param Execution_name.")
+            return
         try:
             self.controller.stop_filterchain_execution(param[0])
         except socket.error:
             logger.error(DISCONNECTED_MSG)
+
+    def help_stop_filterchain_execution(self):
+        info = ['stop_filterchain_execution name',
+                'Name can be auto-complete.']
+        print('\n'.join(info))
+
+    def complete_stop_filterchain_execution(self, text, line, begidx, endidx):
+        param = line.split()
+        completions = None
+        if len(param) == 1 or (len(param) == 2 and line[-1] != ' '):
+            # auto-complete media
+            lst_execution = self.controller.get_execution_list()
+            if not text:
+                completions = lst_execution[:]
+            else:
+                completions = [f for f in lst_execution if
+                               f.startswith(text)]
+        return completions
 
     def do_start_record(self, line):
         # media_name
@@ -153,6 +206,15 @@ class VCmd(cmd.Cmd):
             return
 
         logger.info(lst_media)
+
+    def do_get_execution_list(self, line):
+        try:
+            lst_execution = self.controller.get_execution_list()
+        except socket.error:
+            logger.error(DISCONNECTED_MSG)
+            return
+
+        logger.info(lst_execution)
 
     def do_EOF(self, line):
         # Redo last command

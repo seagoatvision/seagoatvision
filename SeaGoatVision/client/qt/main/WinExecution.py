@@ -38,7 +38,6 @@ class WinExecution(QtCore.QObject):
         self.shared_info = SharedInfo()
 
         self.mode_edit = False
-        self.last_index = 0
 
         self.ui = None
         self.reload_ui()
@@ -89,7 +88,9 @@ class WinExecution(QtCore.QObject):
         if not filterchain_name:
             filterchain_name = keys.get_empty_filterchain_name()
         if self.mode_edit or not first_filterchain_name:
-            if not self._execute(execution_name, media_name, filterchain_name):
+            execution_name = self._execute(execution_name, media_name,
+                                           filterchain_name)
+            if not execution_name:
                 return
             else:
                 self._lst_execution_clicked()
@@ -171,7 +172,6 @@ class WinExecution(QtCore.QObject):
         self.mode_edit = False
         self._mode_edit(self.mode_edit)
 
-        self.last_index += 1
         self.ui.lstExecution.clear()
         exec_list = self.controller.get_execution_list()
         for execution_name in exec_list:
@@ -201,14 +201,14 @@ class WinExecution(QtCore.QObject):
             return False
         file_name = self.shared_info.get(SharedInfo.GLOBAL_PATH_MEDIA)
         is_client_manager = media_name == keys.get_media_file_video_name()
-        status = self.controller.start_filterchain_execution(
+        execution_name = self.controller.start_filterchain_execution(
             execution_name,
             media_name,
             filterchain_name,
             file_name,
             is_client_manager
         )
-        if not status:
+        if not execution_name:
             self.cancel()
             return False
         self._mode_edit(False)
@@ -218,7 +218,7 @@ class WinExecution(QtCore.QObject):
                      "file_name": file_name}
         self.shared_info.set(SharedInfo.GLOBAL_START_EXEC, exec_info)
         self._lst_execution_clicked()
-        return True
+        return execution_name
 
     def _mode_edit(self, mode_edit):
         self.mode_edit = mode_edit
@@ -233,8 +233,6 @@ class WinExecution(QtCore.QObject):
                 SharedInfo.GLOBAL_FILTERCHAIN)
             if filterchain_name:
                 self.ui.txtFilterchain.setText(filterchain_name)
-            self.last_index += 1
-            self.ui.txtExecution.setText("Execution-%d" % self.last_index)
             media_name = self.shared_info.get(SharedInfo.GLOBAL_MEDIA)
             if media_name:
                 self.ui.txtMedia.setText(media_name)
