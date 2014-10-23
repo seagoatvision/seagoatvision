@@ -76,10 +76,12 @@ class TestFilter(unittest2.TestCase):
         self.assertTrue(status)
         # wait 3 seconds of execution to have enough process
         time.sleep(3)
+
+    def test_04_stop_execution_generator(self):
         status = self.ctr.stop_filterchain_execution(EXECUTION_NAME)
         self.assertTrue(status)
 
-    def test_04_start_empty(self):
+    def test_05_start_execution_empty(self):
         status = self.ctr.start_filterchain_execution(EXECUTION_NAME,
                                                       MEDIA_NAME_2,
                                                       FILTERCHAIN_NAME, None,
@@ -87,6 +89,10 @@ class TestFilter(unittest2.TestCase):
         self.assertTrue(status)
         # wait 2 seconds of execution to have enough process
         time.sleep(2)
+
+    def test_06_stop_execution_empty(self):
         status = self.ctr.stop_filterchain_execution(EXECUTION_NAME)
         self.assertTrue(status)
+
+    def test_07_clean(self):
         self.assertTrue(self.ctr.delete_filterchain(FILTERCHAIN_NAME))
