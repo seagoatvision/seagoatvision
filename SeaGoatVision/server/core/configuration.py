@@ -28,6 +28,8 @@ import json
 from SeaGoatVision.commons import log
 
 logger = log.get_logger(__name__)
+PUBLIC_THIRDPARTY_CONF = "configurations/public/thirdparty.json"
+PRIVATE_THIRDPARTY_CONF = "configurations/private/thirdparty.json"
 
 
 class Configuration(object):
@@ -60,10 +62,39 @@ class Configuration(object):
                     "Ignore missing private configuration because: %s" % e)
             if not private_config:
                 logger.info("Loading public configuration.")
+            try:
+                with open(PUBLIC_THIRDPARTY_CONF) as json_file:
+                    thirdparty_config = json.load(json_file)
+            except BaseException as e:
+                print(e)
+                logger.error("Cannot open thirdparty "
+                             "config %s." % PUBLIC_THIRDPARTY_CONF)
+                thirdparty_config = None
+            thirdparty_private_config = None
+            if cls.private_config:
+                try:
+                    with open(PRIVATE_THIRDPARTY_CONF) as json_file:
+                        thirdparty_private_config = json.load(json_file)
+                except BaseException:
+                    logger.info("Cannot open thirdparty config.")
             # first instance
             cls.public_config = public_config
             cls.print_configuration = False
             cls.verbose = False
+            # merge private and public thirdparty
+            pub_module = thirdparty_config.get("module", [])
+            if thirdparty_private_config:
+                pri_module = thirdparty_private_config.get("module", [])
+                dct_private = {dct.get("name"): dct for dct in pri_module}
+                for public in pub_module:
+                    name = public.get("name")
+                    if name not in dct_private.keys():
+                        dct_private[name] = public
+                cls.thirdparty_config = dct_private
+            else:
+                thirdparty_config = {dct.get("name"): dct for dct in
+                                     pub_module}
+                cls.thirdparty_config = thirdparty_config
             # instance class
             cls._instance = super(Configuration, cls).__new__(cls)
         return cls._instance
@@ -113,8 +144,8 @@ class Configuration(object):
                               self.public_config.port_tcp_output)
 
     def get_lst_media_config(self):
-        return self._get_conf("lst_media",
-                              self.public_config.lst_media)
+        conf = self._get_conf("lst_media", self.public_config.lst_media)
+        return conf
 
     def get_is_show_public_filterchain(self):
         return self._get_conf("show_public_filterchain",
@@ -234,3 +265,12 @@ class Configuration(object):
 
     def _get_media_filename(self, media_name):
         return "%s%s%s" % (self.dir_media, media_name, self.ext_media)
+
+    # Thirdparty
+    def get_thirdparty_config(self):
+        return self.thirdparty_config
+
+#
+# class Struct:
+#     def __init__(self, **entries):
+#         self.__dict__.update(entries)

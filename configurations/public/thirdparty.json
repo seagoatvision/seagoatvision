@@ -1,0 +1,16 @@
+{
+  "module":[
+    {
+      "name":"pydc1394",
+      "git":"https://github.com/mathben/PyDC1394.git",
+      "type":"media",
+      "active":false
+    },
+    {
+      "name":"ros_media",
+      "git":"https://github.com/seagoatvision/ros_seagoatvision_media.git",
+      "type":"media",
+      "active":false
+    }
+  ]
+}

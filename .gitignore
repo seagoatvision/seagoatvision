@@ -13,7 +13,7 @@
 
 # Private module
 filters/private
-thirdparty/private
+thirdparty/*
 configurations/private
 
 # Packages

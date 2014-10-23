@@ -1,3 +1,0 @@
-[submodule "thirdparty/public/pydc1394"]
-	path = thirdparty/public/pydc1394
-	url = https://github.com/mathben/PyDC1394.git

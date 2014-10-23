@@ -15,10 +15,17 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+DIRECTORY = $(shell find . -maxdepth 1 -type d -not -path .)
+
 all:
-	-make -C public
-	if [ -e private/Makefile ]; then make -C private; fi;
+	# update code
+	cd ..;./thirdparty/update.py
+	# compile code
+	for p in $(DIRECTORY); do \
+		make -C $$p; \
+	done
 
 clean:
-	-make -C public clean
-	if [ -e private/Makefile ]; then make -C private clean; fi;
+	for p in $(DIRECTORY); do \
+		make -C $$p clean; \
+	done

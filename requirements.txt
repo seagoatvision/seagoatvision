@@ -7,3 +7,4 @@ sphinx
 pexpect
 coverage
 unittest2
+gitpython

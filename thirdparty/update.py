@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python2
 
 # Copyright (C) 2012-2014  Octets - octets.etsmtl.ca
 #
@@ -16,3 +16,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import os
+
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.sys.path.append(parent_dir)
+from SeaGoatVision.server.core.resource import Resource
+from SeaGoatVision.commons import global_env
+
+# set is local, loading config more faster
+global_env.set_is_local(True)
+resource = Resource()
+resource.update_thirdparty()

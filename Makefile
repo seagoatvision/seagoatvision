@@ -28,11 +28,12 @@ view_doc:
 	firefox doc/build/html/index.html
 
 # the test include make the plateform
-test:
+test: third_party
 	if [ -a .coverage ]; then rm .coverage; fi;
 	@echo "Flake 8 test"
 	python2 -m flake8 --ignore="E721" --exclude="SeaGoatVision/server/cpp/cpp_code.py,SeaGoatVision/server/cpp/create_module.py" SeaGoatVision
 	python2 -m flake8 tests
+	python2 -m flake8 thirdparty/update.py
 	@echo "Nose2 test"
 	python2 -m nose2 --with-coverage -v
 	coverage2 combine

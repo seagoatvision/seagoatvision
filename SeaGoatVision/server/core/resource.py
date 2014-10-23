@@ -23,12 +23,15 @@ Description : Manage the resource of the server: filters and media
 import inspect
 
 from SeaGoatVision.server.controller.publisher import Publisher
-from configuration import Configuration
+from SeaGoatVision.server.core.configuration import Configuration
 from SeaGoatVision.commons import keys
 from SeaGoatVision.server.core import filterchain
 from SeaGoatVision.server.media import media_video
-from filter import Filter
+from SeaGoatVision.server.core.filter import Filter
 from SeaGoatVision.commons import log
+import git
+import sys
+import subprocess
 
 logger = log.get_logger(__name__)
 
@@ -70,6 +73,25 @@ class Resource(object):
             self._load_filters()
         if not self.dct_media:
             self.load_media()
+
+    def update_thirdparty(self):
+        tp = self.config.get_thirdparty_config()
+        path_thirdparty = "thirdparty/"
+        print(tp)
+        for name, value in tp.items():
+            if not value.get("active"):
+                continue
+            repo_name = path_thirdparty + name
+            try:
+                repo = git.Repo(repo_name)
+                repo.pull()
+            except git.NoSuchPathError:
+                # repo = git.Git().clone(value.get("git"))
+                subprocess.call("git clone %s %s" % (value.get("git"),
+                                                     repo_name),
+                                shell=True, stdout=sys.stdout)
+            except BaseException:
+                pass
 
     # Utils
     def _module_name(self, name):
