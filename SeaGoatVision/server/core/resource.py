@@ -152,21 +152,21 @@ class Resource(object):
         return {"filters": o_filterchain.get_filter_list(),
                 "default_media": o_filterchain.get_default_media_name()}
 
-    def modify_filterchain(self, old_filterchain_name,
-                           new_filterchain_name, lst_str_filters,
+    def modify_filterchain(self, old_fc_name,
+                           new_fc_name, lst_str_filters,
                            default_media):
         # create new filterchain
-        if self.config.is_filterchain_exist(old_filterchain_name):
-            active_old_filterchain = old_filterchain_name
+        if self.config.is_filterchain_exist(old_fc_name):
+            active_old_fc = old_fc_name
         else:
-            active_old_filterchain = None
-        if self.create_filterchain(new_filterchain_name,
+            active_old_fc = None
+        if self.create_filterchain(new_fc_name,
                                    lst_str_filters,
                                    default_media=default_media,
-                                   old_configuration=active_old_filterchain):
+                                   old_configuration=active_old_fc):
             # delete old filterchain
-            if old_filterchain_name != new_filterchain_name:
-                return self.delete_filterchain(old_filterchain_name)
+            if old_fc_name and old_fc_name != new_fc_name:
+                return self.delete_filterchain(old_fc_name)
             return True
         # error with create filterchain
         return False

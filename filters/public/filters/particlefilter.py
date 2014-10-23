@@ -32,7 +32,7 @@ class ParticleFilter(Filter):
         Filter.__init__(self)
         self.kernel_height = Param("Kernel Height", 10, min_v=1, max_v=256)
         self.kernel_width = Param("Kernel Width", 10, min_v=1, max_v=256)
-        self.area_min = Param("Area Min", 3200, min_v=1)
+        self.area_min = Param("Area Min", 3200, min_v=1, max_v=10000)
         self.configure()
 
     def configure(self):

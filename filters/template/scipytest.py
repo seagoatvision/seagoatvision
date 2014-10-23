@@ -31,7 +31,7 @@ class ScipyExample(Filter):
         # self.notify_output_observers("ScipyTestPy: j=6 \n")
         notify = self.notify_output_observers
         param = {}
-        for value in self.get_params():
+        for value in self.get_params().values():
             key = value.get_name()
             param[key] = value.get()
         weave.inline(

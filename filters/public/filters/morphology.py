@@ -28,9 +28,9 @@ class Morphology(Filter):
         Filter.__init__(self)
         self.kernel_width = Param("Kernel Width", 3, min_v=1, max_v=256)
         self.kernel_height = Param("Kernel Height", 3, min_v=1, max_v=256)
-        self.anchor_x = Param("Anchor X", -1)
-        self.anchor_y = Param("Anchor Y", -1)
-        self.iterations = Param("Iteration,", 1, min_v=1)
+        self.anchor_x = Param("Anchor X", -1, min_v=-5, max_v=10)
+        self.anchor_y = Param("Anchor Y", -1, min_v=-5, max_v=10)
+        self.iterations = Param("Iteration,", 1, min_v=1, max_v=256)
         self.configure()
 
     def configure(self):

@@ -34,6 +34,6 @@ class Rotate(Filter):
 
     def execute(self, image):
         angle = self.angle.get() * 90
-        if self.enable.get():
+        if angle:
             return scipy.ndimage.interpolation.rotate(image, angle)
         return image

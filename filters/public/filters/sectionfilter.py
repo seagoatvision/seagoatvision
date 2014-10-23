@@ -58,7 +58,7 @@ class SectionFilter(Filter):
              self.kernel_erode_height.get()))
         self.kdilate = cv2.getStructuringElement(
             cv2.MORPH_CROSS,
-            (iself.kernel_dilate_width.get(),
+            (self.kernel_dilate_width.get(),
              self.kernel_dilate_height.get()))
 
     def execute(self, image):
