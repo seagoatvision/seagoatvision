@@ -80,22 +80,7 @@ Finally, you will need to compile OpenCV with python bindings from source. Pleas
 
 ### C. Third-party Libs
 
-#### PyDC1394
-
-Note: pydc1394 is dependant on cython 0.19. Make sure it is installed, using easy_install:
-
-	easy_install cython
-
-Go to the root of the SeaGoatVision project and setup git submodule for pydc1394:
-
-	git submodule init
-	git submodule update
-
-In the case submodule update doesn't work, you can always clone the repo manually. From the root of the project:
-
-	cd thirdparty/public
-	rm -rf pydc1394
-	git clone https://github.com/mathben/PyDC1394.git pydc1394
+Active your thirdparty in file configurations/public/thirdparty.json
 
 ### D. Compile
 To compile the filters in Cpp and the third-party, do on the root of the project:
