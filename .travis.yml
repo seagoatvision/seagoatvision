@@ -5,7 +5,7 @@ virtualenv:
   system_site_packages: true
 before_install:
   - sudo apt-get update
-  - sudo apt-get install python-numpy python-scipy python-imaging python-opencv python-pyside python-qt4 libopencv-dev ffmpeg --fix-missing
+  - sudo apt-get install python-opencv python-pyside python-qt4 libopencv-dev ffmpeg --fix-missing
 install:
   - pip2 install -r requirements.txt
   - pip2 install coveralls

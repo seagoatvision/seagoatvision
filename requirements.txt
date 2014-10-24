@@ -8,3 +8,6 @@ pexpect
 coverage
 unittest2
 gitpython
+scipy
+numpy
+Pillow

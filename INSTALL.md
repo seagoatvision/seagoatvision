@@ -32,17 +32,17 @@ Do this command and continue with Ubuntu section.
 	sudo apt-get install gstreamer0.10-ffmpeg ffmpeg
 
 #### Ubuntu :
-	sudo apt-get install python python-numpy python-scipy python-opencv python-pyside python-qt4 python-imaging libopencv-dev python-pip ffmpeg
+	sudo apt-get install python python-opencv python-pyside python-qt4 libopencv-dev python-pip ffmpeg
 	sudo pip install -r requirements.txt
 
 #### Fedora :
-	sudo yum install python numpy scipy opencv-python python-pyside PyQt4 python-pillow-qt opencv-devel python-pip ffmpeg czmq-devel
+	sudo yum install python opencv-python python-pyside PyQt4 opencv-devel python-pip ffmpeg czmq-devel
 	sudo pip install -r requirements.txt
 
 #### Arch Linux :
 Don't forget to active the "community" repository. See https://wiki.archlinux.org/index.php/Pacman
 
-	yaourt -S python2 python2-numpy python2-scipy opencv python2-pyside python2-pyqt python2-imaging python2-pip ffmpeg zeromq
+	yaourt -S python2 opencv python2-pyside python2-pyqt python2-pip ffmpeg zeromq
 	sudo pip2 install -r requirements.txt
 
 #### Windows :
