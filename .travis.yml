@@ -9,7 +9,7 @@ cache:
     - $HOME/.pip-cache/
 before_install:
   - sudo apt-get update
-  - sudo apt-get install libatlas-base-dev gfortran python-opencv python-pyside python-qt4 libopencv-dev ffmpeg --fix-missing
+  - sudo apt-get install python-numpy python-scipy python-imaging python-opencv python-pyside python-qt4 libopencv-dev ffmpeg --fix-missing
 install:
   - pip2 install -r requirements.txt --download-cache $HOME/.pip-cache
   - pip2 install coveralls --download-cache $HOME/.pip-cache
