@@ -19,6 +19,7 @@
 
 import psutil
 import pexpect
+import sys
 
 SERVER_PATH = './server.py'
 CLIENT_PATH = './client.py'
@@ -31,13 +32,16 @@ SERVER_CLOSE_STR = "Close SeaGoat. See you later!"
 CLI_CMD_READY = "(Cmd)"
 
 
-def start_server(timeout=0):
+def start_server(timeout=0, verbose=False):
     """
 
     :param timeout: timeout to kill server
+    :param verbose: write output of child in sys.stdout
     :return: spawn process of server
     """
     child = pexpect.spawn(SERVER_PATH, timeout=timeout)
+    if verbose:
+        child.logfile_read = sys.stdout
     str_attempt = "Waiting command"
     str_not_attempt = SERVER_START_DUPLICATE_STR
     expect(child, str_attempt, not_expect_value=str_not_attempt,
@@ -46,8 +50,10 @@ def start_server(timeout=0):
     return child
 
 
-def start_cli(cmd, timeout=0):
+def start_cli(cmd, timeout=0, verbose=False):
     child = pexpect.spawn(cmd, timeout=timeout)
+    if verbose:
+        child.logfile_read = sys.stdout
     str_attempt = CLI_CMD_READY
     expect(child, str_attempt, timeout=DELAY_START_CLI)
     return child
@@ -85,7 +91,6 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
     """
     msg_err_wrong_param = "Param %s need to be a str or list."
     fail_msg = "Receive \"%s\" and expected \"%s\". Debug %s Index %s."
-    min_index_expected = 2
     expected = [pexpect.EOF, pexpect.TIMEOUT]
 
     if not expect_value:
@@ -97,8 +102,8 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
     elif type(expect_value) is not list:
         raise BaseException(msg_err_wrong_param % "expect_value")
 
+    expected_index = range(len(expected), len(expected) + len(expect_value))
     expected += expect_value
-    max_index_expected = len(expect_value) - 1
 
     if not_expect_value:
         if type(not_expect_value) is str:
@@ -108,11 +113,14 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
         expected += not_expect_value
 
     index = child.expect(expected, timeout=timeout)
-    # print("Debug index %s, expected value %s, pass expected %s" % (
-    #     index, expected, expect_value))
     # Error if not inside the expected index
-    if min_index_expected > index or index < max_index_expected:
+    if index not in expected_index:
+        print("\n############################################################")
+        print("\nDebug index %s, expected value %s, pass expected %s, "
+              "expected index %s\n" % (
+                  index, expected, expect_value, expected_index))
         print(child.before)
+        print("\n############################################################")
         val = expect_value[0] if len(expect_value) == 1 else expect_value
         raise BaseException(fail_msg % (expected[index], val, expected, index))
         # print expected

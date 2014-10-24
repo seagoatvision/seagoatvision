@@ -27,6 +27,7 @@ DELAY_START_SERVER = ctt.DELAY_START_SERVER
 DELAY_CLOSE_SERVER = ctt.DELAY_CLOSE_SERVER
 DELAY_START_CLI = ctt.DELAY_START_CLI
 SERVER_RECEIVE_CMD = "Request : %s"
+SERVER_NOT_EXPECTED = ["ERROR", "WARNING"]
 
 FILTERCHAIN_NAME = "test_filters"
 EXECUTION_NAME = "test_filters"
@@ -41,8 +42,8 @@ class TestFilter(unittest2.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # 15 minutes, it's enough for all command test
-        total_delay_life_sgv = 60 * 15
+        # 5 minutes, it's enough for all command test
+        total_delay_life_sgv = 60 * 5
         cls._srv = ctt.start_server(timeout=total_delay_life_sgv)
         cls.ctr = JsonClient(8090, host="localhost")
         if not cls.ctr.is_connected():
@@ -60,39 +61,47 @@ class TestFilter(unittest2.TestCase):
         dct_filters = self.ctr.get_filter_list()
         self.assertTrue(dct_filters)
         # Exception, remove gpu filter
+        # TODO all these filter need to be tested, excepted material limitation
         ignore_lst = ["GPUExample", "BGR2Grayscale", "FaceSwap", "resize_img"]
-        filters = [f for f in dct_filters.keys() if not
-                   [match for match in ignore_lst if match in f]]
+        filters = [f for f in dct_filters.keys() if
+                   not [match for match in ignore_lst if match in f]]
         # print(filters)
         status = self.ctr.modify_filterchain(None, FILTERCHAIN_NAME, filters,
                                              None)
         self.assertTrue(status)
 
     def test_03_start_execution_generator(self):
-        status = self.ctr.start_filterchain_execution(EXECUTION_NAME,
-                                                      MEDIA_NAME_1,
-                                                      FILTERCHAIN_NAME, None,
-                                                      None)
-        self.assertTrue(status)
-        # wait 3 seconds of execution to have enough process
-        time.sleep(3)
+        self._start_execution(MEDIA_NAME_1)
 
     def test_04_stop_execution_generator(self):
-        status = self.ctr.stop_filterchain_execution(EXECUTION_NAME)
-        self.assertTrue(status)
+        self._stop_execution()
 
+    @unittest2.skip("Waiting for feature #151 for None image in entry.")
     def test_05_start_execution_empty(self):
-        status = self.ctr.start_filterchain_execution(EXECUTION_NAME,
-                                                      MEDIA_NAME_2,
-                                                      FILTERCHAIN_NAME, None,
-                                                      None)
-        self.assertTrue(status)
-        # wait 2 seconds of execution to have enough process
-        time.sleep(2)
+        self._start_execution(MEDIA_NAME_2)
 
+    @unittest2.skip("Waiting for feature #151 for None image in entry.")
     def test_06_stop_execution_empty(self):
-        status = self.ctr.stop_filterchain_execution(EXECUTION_NAME)
-        self.assertTrue(status)
+        self._stop_execution()
 
     def test_07_clean(self):
         self.assertTrue(self.ctr.delete_filterchain(FILTERCHAIN_NAME))
+
+    def _start_execution(self, media_name):
+        cmd = SERVER_RECEIVE_CMD % "start_filterchain_execution"
+        status = self.ctr.start_filterchain_execution(EXECUTION_NAME,
+                                                      media_name,
+                                                      FILTERCHAIN_NAME, None,
+                                                      None)
+        self.assertTrue(status)
+        # wait 5 seconds of execution to have enough process
+        time.sleep(5)
+        ctt.expect(self._srv, cmd, SERVER_NOT_EXPECTED,
+                   timeout=DELAY_START_CLI)
+
+    def _stop_execution(self):
+        cmd = SERVER_RECEIVE_CMD % "stop_filterchain_execution"
+        status = self.ctr.stop_filterchain_execution(EXECUTION_NAME)
+        self.assertTrue(status)
+        ctt.expect(self._srv, cmd, SERVER_NOT_EXPECTED,
+                   timeout=DELAY_START_CLI)

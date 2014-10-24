@@ -92,8 +92,8 @@ class TestCli(unittest2.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # 15 minutes, it's enough for all command test
-        total_delay_life_sgv = 60 * 15
+        # 5 minutes, it's enough for all command test
+        total_delay_life_sgv = 60 * 5
         cls._srv = ctt.start_server(timeout=total_delay_life_sgv)
 
         # open client
@@ -190,8 +190,8 @@ class TestCliLocal(unittest2.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # 15 minutes, it's enough for all command test
-        total_delay_life_sgv = 60 * 15
+        # 5 minutes, it's enough for all command test
+        total_delay_life_sgv = 60 * 5
 
         # open client
         cls._cli = ctt.start_cli(CLIENT_CLI_LOCAL_PATH,
