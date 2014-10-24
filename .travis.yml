@@ -3,12 +3,16 @@ python:
   - "2.7"
 virtualenv:
   system_site_packages: true
+cache:
+  apt: true
+  directories:
+    - $HOME/.pip-cache/
 before_install:
   - sudo apt-get update
   - sudo apt-get install libatlas-base-dev gfortran python-opencv python-pyside python-qt4 libopencv-dev ffmpeg --fix-missing
 install:
-  - pip2 install -r requirements.txt
-  - pip2 install coveralls
+  - pip2 install -r requirements.txt --download-cache $HOME/.pip-cache
+  - pip2 install coveralls --download-cache $HOME/.pip-cache
 script:
   - make test
 notifications:

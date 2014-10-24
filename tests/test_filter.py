@@ -63,7 +63,7 @@ class TestFilter(unittest2.TestCase):
         # Exception, remove gpu filter
         # TODO all these filter need to be tested, excepted material limitation
         ignore_lst = ["GPUExample", "BGR2Grayscale", "FaceSwap", "resize_img",
-                      "BGR2HSVManual"]
+                      "BGR2HSVManual", "Watershed"]
         filters = [f for f in dct_filters.keys() if
                    not [match for match in ignore_lst if match in f]]
         # print(filters)
