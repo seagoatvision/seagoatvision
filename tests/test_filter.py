@@ -44,7 +44,7 @@ class TestFilter(unittest2.TestCase):
     def setUpClass(cls):
         # 5 minutes, it's enough for all command test
         total_delay_life_sgv = 60 * 5
-        cls._srv = ctt.start_server(timeout=total_delay_life_sgv)
+        cls._srv = ctt.start_server(timeout=total_delay_life_sgv, verbose=True)
         cls.ctr = JsonClient(8090, host="localhost")
         if not cls.ctr.is_connected():
             raise BaseException("Cannot connect to server.")
@@ -62,7 +62,8 @@ class TestFilter(unittest2.TestCase):
         self.assertTrue(dct_filters)
         # Exception, remove gpu filter
         # TODO all these filter need to be tested, excepted material limitation
-        ignore_lst = ["GPUExample", "BGR2Grayscale", "FaceSwap", "resize_img"]
+        ignore_lst = ["GPUExample", "BGR2Grayscale", "FaceSwap", "resize_img",
+                      "BGR2HSVManual"]
         filters = [f for f in dct_filters.keys() if
                    not [match for match in ignore_lst if match in f]]
         # print(filters)

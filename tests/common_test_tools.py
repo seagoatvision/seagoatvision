@@ -120,6 +120,7 @@ def expect(child, expect_value, not_expect_value=None, timeout=0):
               "expected index %s\n" % (
                   index, expected, expect_value, expected_index))
         print(child.before)
+        print(child.after)
         print("\n############################################################")
         val = expect_value[0] if len(expect_value) == 1 else expect_value
         raise BaseException(fail_msg % (expected[index], val, expected, index))
