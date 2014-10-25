@@ -31,7 +31,8 @@ SERVER_START_DUPLICATE_STR = "SeaGoat already run with the pid"
 SERVER_CLOSE_STR = "Close SeaGoat. See you later!"
 CLI_CMD_READY = "(Cmd)"
 LST_IGNORE_WARNING = ["Coverage.py warning: No data was collected.",
-                      "libdc1394 error: Failed to initialize libdc1394"]
+                      "libdc1394 error: Failed to initialize libdc1394",
+                      "load_media() Camera Webcam not detected"]
 
 
 def start_server(timeout=0, verbose=False):
@@ -86,10 +87,16 @@ def stop_server(child):
 
 def expect_warning_str(data):
     print(data)
+    ori_data = data.splitlines()
     for str_ignore in LST_IGNORE_WARNING:
         data = data.replace(str_ignore, "")
     lines = data.upper().splitlines()
-    error = [line for line in lines if "WARNING" in line or "ERROR" in line]
+    error = []
+    i = 0
+    for line in lines:
+        i += 1
+        if "WARNING" in line or "ERROR" in line:
+            error.append(ori_data[i])
     if error:
         raise BaseException(error)
 

@@ -42,8 +42,11 @@ class TestDoc(unittest2.TestCase):
                 'utf8')
         except CalledProcessError as e:
             print(e.output)
-            raise
-        ctt.expect_warning_str(output)
+            self.fail(e)
+        try:
+            ctt.expect_warning_str(output)
+        except BaseException as e:
+            self.fail(e)
 
     def test_doctest(self):
         """
@@ -53,5 +56,8 @@ class TestDoc(unittest2.TestCase):
             output = qx(CMD_DOCTEST, stderr=STDOUT, shell=True).decode('utf8')
         except CalledProcessError as e:
             print(e.output)
-            raise
-        ctt.expect_warning_str(output)
+            self.fail(e)
+        try:
+            ctt.expect_warning_str(output)
+        except BaseException as e:
+            self.fail(e)

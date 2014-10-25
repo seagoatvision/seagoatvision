@@ -47,42 +47,50 @@ class TestCliNotConnected(unittest2.TestCase):
         """
         child = pexpect.spawn(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
         str_attempt = "Connection refused"
-        ctt.expect(child, str_attempt, timeout=DELAY_START_CLI)
+        try:
+            ctt.expect(child, str_attempt, timeout=DELAY_START_CLI)
+        except BaseException as e:
+            self.fail(e)
 
     def test_is_disconnected(self):
-        total_delay_life_sgv = DELAY_START_SERVER + DELAY_CLOSE_SERVER * 2
-        child_srv = ctt.start_server(timeout=total_delay_life_sgv)
-        child_cli = pexpect.spawn(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
+        try:
+            total_delay_life_sgv = DELAY_START_SERVER + DELAY_CLOSE_SERVER * 2
+            child_srv = ctt.start_server(timeout=total_delay_life_sgv)
+            child_cli = pexpect.spawn(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
 
-        # Test is connected
-        cmd = "is_connected"
-        str_attempt_cli = CLI_EXPECT_CONNECTED
-        str_attempt_srv = SERVER_RECEIVE_CMD % cmd
-        child_cli.sendline(cmd)
-        ctt.expect(child_cli, str_attempt_cli, timeout=DELAY_START_CLI)
-        ctt.expect(child_srv, str_attempt_srv, timeout=DELAY_START_CLI)
-
-        ctt.stop_server(child_srv)
-
-        # test is disconnected
-        lst_cmd = ["get_media_list", "stop_record", "start_record",
-                   "stop_filterchain_execution", "start_filterchain_execution",
-                   "stop_output_observer", "add_output_observer",
-                   "get_filterchain_list", "get_filter_list", "is_connected"]
-        for cmd in lst_cmd:
-            str_attempt_cli = CLI_EXPECT_DISCONNECTED
-            child_cli.sendline(cmd + " test")
+            # Test is connected
+            cmd = "is_connected"
+            str_attempt_cli = CLI_EXPECT_CONNECTED
+            str_attempt_srv = SERVER_RECEIVE_CMD % cmd
+            child_cli.sendline(cmd)
             ctt.expect(child_cli, str_attempt_cli, timeout=DELAY_START_CLI)
+            ctt.expect(child_srv, str_attempt_srv, timeout=DELAY_START_CLI)
 
-        # test is connected
-        child_srv = ctt.start_server(timeout=total_delay_life_sgv)
-        str_attempt_cli = CLI_EXPECT_CONNECTED
-        str_attempt_srv = SERVER_RECEIVE_CMD % cmd
-        child_cli.sendline(cmd)
-        ctt.expect(child_cli, str_attempt_cli, timeout=DELAY_START_CLI)
-        ctt.expect(child_srv, str_attempt_srv, timeout=DELAY_START_CLI)
+            ctt.stop_server(child_srv)
 
-        ctt.stop_server(child_srv)
+            # test is disconnected
+            lst_cmd = ["get_media_list", "stop_record", "start_record",
+                       "stop_filterchain_execution",
+                       "start_filterchain_execution",
+                       "stop_output_observer", "add_output_observer",
+                       "get_filterchain_list", "get_filter_list",
+                       "is_connected"]
+            for cmd in lst_cmd:
+                str_attempt_cli = CLI_EXPECT_DISCONNECTED
+                child_cli.sendline(cmd + " test")
+                ctt.expect(child_cli, str_attempt_cli, timeout=DELAY_START_CLI)
+
+            # test is connected
+            child_srv = ctt.start_server(timeout=total_delay_life_sgv)
+            str_attempt_cli = CLI_EXPECT_CONNECTED
+            str_attempt_srv = SERVER_RECEIVE_CMD % cmd
+            child_cli.sendline(cmd)
+            ctt.expect(child_cli, str_attempt_cli, timeout=DELAY_START_CLI)
+            ctt.expect(child_srv, str_attempt_srv, timeout=DELAY_START_CLI)
+
+            ctt.stop_server(child_srv)
+        except BaseException as e:
+            self.fail(e)
 
 
 class TestCli(unittest2.TestCase):
@@ -105,18 +113,21 @@ class TestCli(unittest2.TestCase):
 
     def test_signal(self):
         # open client
-        child = ctt.start_cli(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
+        try:
+            child = ctt.start_cli(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
 
-        # send SIGINT
-        child.kill(pexpect.signal.SIGINT)
-        ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
+            # send SIGINT
+            child.kill(pexpect.signal.SIGINT)
+            ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
 
-        # open client
-        child = ctt.start_cli(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
+            # open client
+            child = ctt.start_cli(CLIENT_CLI_PATH, timeout=DELAY_START_CLI)
 
-        # send SIGTERM
-        child.kill(pexpect.signal.SIGTERM)
-        ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
+            # send SIGTERM
+            child.kill(pexpect.signal.SIGTERM)
+            ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
+        except BaseException as e:
+            self.fail(e)
 
     def test_01_is_connected(self):
         cmd = "is_connected"
@@ -168,19 +179,27 @@ class TestCli(unittest2.TestCase):
         # cannot close the remote server
         str_attempt_cli = CLI_EXPECT_EXIT
         self._cli.sendline(cmd)
-        ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
-        ctt.expect(self._cli, pexpect.EOF, timeout=DELAY_START_CLI)
+        try:
+            ctt.expect(self._cli, str_attempt_cli, timeout=DELAY_START_CLI)
+            ctt.expect(self._cli, pexpect.EOF, timeout=DELAY_START_CLI)
+        except BaseException as e:
+            self.fail(e)
 
     def _generic_cli_test(self, cmd, str_attempt_cli, args=None):
         str_attempt_srv = SERVER_RECEIVE_CMD % cmd
         not_expect_value = ["WARNING", "ERROR"]
         cmds = cmd if not args else cmd + " " + args
         self._cli.sendline(cmds)
-        ctt.expect(self._cli, str_attempt_cli,
-                   not_expect_value=not_expect_value, timeout=DELAY_START_CLI)
-        ctt.expect(self._srv, str_attempt_srv,
-                   not_expect_value=not_expect_value, timeout=DELAY_START_CLI)
-        # print self._cli.before
+        try:
+            ctt.expect(self._cli, str_attempt_cli,
+                       not_expect_value=not_expect_value,
+                       timeout=DELAY_START_CLI)
+            ctt.expect(self._srv, str_attempt_srv,
+                       not_expect_value=not_expect_value,
+                       timeout=DELAY_START_CLI)
+        except BaseException as e:
+            self.fail(e)
+            # print self._cli.before
 
 
 class TestCliLocal(unittest2.TestCase):
@@ -246,28 +265,40 @@ class TestCliLocal(unittest2.TestCase):
         # exit not exist in the server, attempt a message that precise we
         # cannot close the remote server
         self._cli.sendline(cmd)
-        ctt.expect(self._cli, pexpect.EOF, timeout=DELAY_START_CLI)
+        try:
+            ctt.expect(self._cli, pexpect.EOF, timeout=DELAY_START_CLI)
+        except BaseException as e:
+            self.fail(e)
 
     def _generic_cli_test(self, cmd, str_attempt_cli, args=None):
         not_expect_value = ["WARNING", "ERROR"]
         cmds = cmd if not args else cmd + " " + args
         self._cli.sendline(cmds)
-        ctt.expect(self._cli, str_attempt_cli,
-                   not_expect_value=not_expect_value, timeout=DELAY_START_CLI)
+        try:
+            ctt.expect(self._cli, str_attempt_cli,
+                       not_expect_value=not_expect_value,
+                       timeout=DELAY_START_CLI)
+        except BaseException as e:
+            self.fail(e)
 
 
 class TestCliSignalLocal(unittest2.TestCase):
     def test_signal(self):
         # open client
-        child = ctt.start_cli(CLIENT_CLI_LOCAL_PATH, timeout=DELAY_START_CLI)
+        try:
+            child = ctt.start_cli(CLIENT_CLI_LOCAL_PATH,
+                                  timeout=DELAY_START_CLI)
 
-        # send SIGINT
-        child.kill(pexpect.signal.SIGINT)
-        ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
+            # send SIGINT
+            child.kill(pexpect.signal.SIGINT)
+            ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
 
-        # open client
-        child = ctt.start_cli(CLIENT_CLI_LOCAL_PATH, timeout=DELAY_START_CLI)
+            # open client
+            child = ctt.start_cli(CLIENT_CLI_LOCAL_PATH,
+                                  timeout=DELAY_START_CLI)
 
-        # send SIGTERM
-        child.kill(pexpect.signal.SIGTERM)
-        ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
+            # send SIGTERM
+            child.kill(pexpect.signal.SIGTERM)
+            ctt.expect(child, pexpect.EOF, timeout=DELAY_START_CLI)
+        except BaseException as e:
+            self.fail(e)

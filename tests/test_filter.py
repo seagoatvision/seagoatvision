@@ -103,15 +103,21 @@ class TestFilter(unittest2.TestCase):
         # wait 5 seconds of execution to have enough process
         # TODO wait until receive next image and not 10 aleatory second!
         time.sleep(10)
-        ctt.expect(self._srv, cmd, SERVER_NOT_EXPECTED,
-                   timeout=DELAY_START_CLI)
+        try:
+            ctt.expect(self._srv, cmd, SERVER_NOT_EXPECTED,
+                       timeout=DELAY_START_CLI)
+        except BaseException as e:
+            self.fail(e)
 
     def _stop_execution(self):
         cmd = SERVER_RECEIVE_CMD % "stop_filterchain_execution"
         status = self.ctr.stop_filterchain_execution(EXECUTION_NAME)
         self.assertTrue(status)
-        ctt.expect(self._srv, cmd, SERVER_NOT_EXPECTED,
-                   timeout=DELAY_START_CLI)
+        try:
+            ctt.expect(self._srv, cmd, SERVER_NOT_EXPECTED,
+                       timeout=DELAY_START_CLI)
+        except BaseException as e:
+            self.fail(e)
 
 
 class TestBuildFilter(unittest2.TestCase):
@@ -121,5 +127,8 @@ class TestBuildFilter(unittest2.TestCase):
                 'utf8')
         except CalledProcessError as e:
             print(e.output)
-            raise
-        ctt.expect_warning_str(output)
+            self.fail(e)
+        try:
+            ctt.expect_warning_str(output)
+        except BaseException as e:
+            self.fail(e)

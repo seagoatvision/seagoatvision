@@ -43,46 +43,60 @@ class TestStartServer(unittest2.TestCase):
         The test will start and stop the server
         """
         total_delay_life_sgv = DELAY_START_SERVER + DELAY_CLOSE_SERVER * 2
-        child = ctt.start_server(timeout=total_delay_life_sgv)
+        try:
+            child = ctt.start_server(timeout=total_delay_life_sgv)
+        except BaseException as e:
+            self.fail(e)
 
-        ctt.stop_server(child)
+        try:
+            ctt.stop_server(child)
+        except BaseException as e:
+            self.fail(e)
 
     def test_double_open_server(self):
         total_delay_life_sgv = DELAY_START_SERVER + DELAY_CLOSE_SERVER * 2
-        child_1 = ctt.start_server(timeout=total_delay_life_sgv)
+        try:
+            child_1 = ctt.start_server(timeout=total_delay_life_sgv)
 
-        child_2 = pexpect.spawn(SERVER_PATH, timeout=DELAY_START_SERVER)
-        str_attempt = SERVER_START_DUPLICATE_STR
-        str_not_attempt = SERVER_START_STR
-        ctt.expect(child_2, str_attempt, not_expect_value=str_not_attempt,
-                   timeout=DELAY_START_SERVER)
-        ctt.expect(child_2, pexpect.EOF, timeout=DELAY_CLOSE_SERVER)
-
-        ctt.stop_server(child_1)
+            child_2 = pexpect.spawn(SERVER_PATH, timeout=DELAY_START_SERVER)
+            str_attempt = SERVER_START_DUPLICATE_STR
+            str_not_attempt = SERVER_START_STR
+            ctt.expect(child_2, str_attempt, not_expect_value=str_not_attempt,
+                       timeout=DELAY_START_SERVER)
+            ctt.expect(child_2, pexpect.EOF, timeout=DELAY_CLOSE_SERVER)
+            ctt.stop_server(child_1)
+        except BaseException as e:
+            self.fail(e)
 
     def test_false_lock_open_server(self):
-        total_delay_life_sgv = DELAY_START_SERVER + DELAY_CLOSE_SERVER * 2
-        child_1 = ctt.start_server(timeout=total_delay_life_sgv)
-        # force kill it and lock will stay here
-        child_1.kill(signal.SIGKILL)
-        child_1.wait()
+        try:
+            total_delay_life_sgv = DELAY_START_SERVER + DELAY_CLOSE_SERVER * 2
+            child_1 = ctt.start_server(timeout=total_delay_life_sgv)
+            # force kill it and lock will stay here
+            child_1.kill(signal.SIGKILL)
+            child_1.wait()
 
-        child_2 = pexpect.spawn(SERVER_PATH, timeout=DELAY_START_SERVER)
-        str_attempt = SERVER_START_STR
-        str_not_attempt = SERVER_START_DUPLICATE_STR
-        ctt.expect(child_2, str_attempt, not_expect_value=str_not_attempt,
-                   timeout=DELAY_START_SERVER)
+            child_2 = pexpect.spawn(SERVER_PATH, timeout=DELAY_START_SERVER)
+            str_attempt = SERVER_START_STR
+            str_not_attempt = SERVER_START_DUPLICATE_STR
+            ctt.expect(child_2, str_attempt, not_expect_value=str_not_attempt,
+                       timeout=DELAY_START_SERVER)
 
-        ctt.stop_server(child_2)
+            ctt.stop_server(child_2)
+        except BaseException as e:
+            self.fail(e)
 
     def test_open_server_corrupted_lock(self):
-        os.system("echo 'patate' > %s" % LOCK_FILE)
+        try:
+            os.system("echo 'patate' > %s" % LOCK_FILE)
 
-        child = pexpect.spawn(SERVER_PATH, timeout=DELAY_START_SERVER)
-        str_attempt = SERVER_START_CORRUPTED_LOCK
-        str_not_attempt = SERVER_START_STR
-        ctt.expect(child, str_attempt, not_expect_value=str_not_attempt,
-                   timeout=DELAY_START_SERVER)
-        ctt.expect(child, pexpect.EOF, timeout=DELAY_CLOSE_SERVER)
+            child = pexpect.spawn(SERVER_PATH, timeout=DELAY_START_SERVER)
+            str_attempt = SERVER_START_CORRUPTED_LOCK
+            str_not_attempt = SERVER_START_STR
+            ctt.expect(child, str_attempt, not_expect_value=str_not_attempt,
+                       timeout=DELAY_START_SERVER)
+            ctt.expect(child, pexpect.EOF, timeout=DELAY_CLOSE_SERVER)
 
-        os.remove(LOCK_FILE)
+            os.remove(LOCK_FILE)
+        except BaseException as e:
+            self.fail(e)
