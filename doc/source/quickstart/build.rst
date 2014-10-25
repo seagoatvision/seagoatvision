@@ -1,0 +1,4 @@
+Building SeagoatVision filter
+=============================
+
+>>> make

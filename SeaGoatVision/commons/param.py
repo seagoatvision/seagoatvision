@@ -31,8 +31,9 @@ value.
 TIPS :
     - You want only EVEN number for your gaussian blur?
 
->>> lst_gauss_value = [i for i in range(100) if not(i % 2)]
->>> kern_gauss_blur = Param("kern_gauss_blur", 4, lst_value=lst_gauss_value)
+>>> from SeaGoatVision.commons.param import Param
+
+>>> kern_gauss_blur = Param("kern_gauss_blur", 4, lst_value=range(0, 12, 2))
 
     - In this example, we can't access to -1 because of min.
 
@@ -41,7 +42,7 @@ TIPS :
     - We can use a threshold value. In this situation, we have two value. The \
 value is always the low value and the threshold_high is the high value.
 
->>> p = Param("f", 2, min_v=1, max_v=8, threshold=5)
+>>> p = Param("f", 2, min_v=1, max_v=8, thres_h=5)
 
     - When value is None, you can use it like a trigger.
 
@@ -320,14 +321,16 @@ class Param(object):
     def _validate_number(self, value):
         if not (self.type_t is int or self.type_t is float):
             return
-        delta_val = self.min_v - self.delta_float
-        if self.min_v is not None and value < delta_val:
-            msg = "Value %s is lower then min %s" % (value, self.min_v)
-            raise ValueError(msg)
-        delta_val = self.max_v + self.delta_float
-        if self.max_v is not None and value > delta_val:
-            msg = "Value %s is upper then max %s" % (value, self.max_v)
-            raise ValueError(msg)
+        if self.min_v is not None:
+            delta_val = self.min_v - self.delta_float
+            if self.min_v is not None and value < delta_val:
+                msg = "Value %s is lower then min %s" % (value, self.min_v)
+                raise ValueError(msg)
+        if self.max_v is not None:
+            delta_val = self.max_v + self.delta_float
+            if self.max_v is not None and value > delta_val:
+                msg = "Value %s is upper then max %s" % (value, self.max_v)
+                raise ValueError(msg)
         if self.lst_value is not None and value not in self.lst_value:
             raise ValueError("value %s is not in lst of value" % value)
 

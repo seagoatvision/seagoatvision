@@ -18,19 +18,41 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from subprocess import STDOUT, check_output as qx
+from subprocess import CalledProcessError
+import unittest2
 
 CMD_GENERATE_DOC = "make SPHINXOPTS='-q' -C ./doc html"
-TIMEOUT_DOC = 60
+CMD_DOCTEST = "python2 -m doctest -v SeaGoatVision/commons/param.py"
+# TIMEOUT_DOC = 60
 
 
-def test_generate_doc():
-    """
-    Generate documentation and search warning or error message.
-    """
-    # TODO implement a timeout if documentation not finish. works in python3.4
-    # output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True,
-    # timeout=TIMEOUT_DOC).decode('utf8')
-    output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True).decode('utf8')
-    print(output)
-    assert "WARNING" not in output
-    assert "ERROR" not in output
+class TestCliLocal(unittest2.TestCase):
+    def test_generate_doc(self):
+        """
+        Generate documentation and search warning or error message.
+        """
+        # TODO implement a timeout. works in python3.4
+        # output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True,
+        # timeout=TIMEOUT_DOC).decode('utf8')
+        try:
+            output = qx(CMD_GENERATE_DOC, stderr=STDOUT, shell=True).decode(
+                'utf8')
+        except CalledProcessError as e:
+            print(e.output)
+            raise
+        print(output)
+        assert "WARNING" not in output
+        assert "ERROR" not in output
+
+    def test_doctest(self):
+        """
+        Start doctest and search warning or error message
+        """
+        try:
+            output = qx(CMD_DOCTEST, stderr=STDOUT, shell=True).decode('utf8')
+        except CalledProcessError as e:
+            print(e.output)
+            raise
+        print(output)
+        assert "WARNING" not in output
+        assert "ERROR" not in output
