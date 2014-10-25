@@ -32,6 +32,8 @@ test: third_party test_flake8
 	if [ -a .coverage ]; then rm .coverage; fi;
 	@echo "Nose2 test"
 	python2 -m nose2 --with-coverage -v
+	# move and combine all coverage
+	mv doc/.coverage.* .
 	coverage2 combine
 
 test_flake8:

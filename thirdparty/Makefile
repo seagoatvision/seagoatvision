@@ -21,11 +21,11 @@ all:
 	# update code
 	cd ..;./thirdparty/update.py
 	# compile code
-	for p in $(DIRECTORY); do \
-		make -C $$p; \
+	for P in $(DIRECTORY); do \
+		if [ -a "$$P/Makefile" ]; then make -C $$P; fi; \
 	done
 
 clean:
-	for p in $(DIRECTORY); do \
-		make -C $$p clean; \
+	for P in $(DIRECTORY); do \
+		if [ -a "$$P/Makefile" ]; then make -C $$P clean; fi; \
 	done

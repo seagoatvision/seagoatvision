@@ -41,8 +41,11 @@ class TestDoc(unittest2.TestCase):
             print(e.output)
             raise
         print(output)
-        assert "WARNING" not in output
-        assert "ERROR" not in output
+        # Exception, remove the warning of coverage no data collected
+        rem_warn = "Coverage.py warning: No data was collected."
+        out = output.replace(rem_warn, "").upper()
+        assert "WARNING" not in out
+        assert "ERROR" not in out
 
     def test_doctest(self):
         """
@@ -54,5 +57,6 @@ class TestDoc(unittest2.TestCase):
             print(e.output)
             raise
         print(output)
-        assert "WARNING" not in output
-        assert "ERROR" not in output
+        out = output.upper()
+        assert "WARNING" not in out
+        assert "ERROR" not in out

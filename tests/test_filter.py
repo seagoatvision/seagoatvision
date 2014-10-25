@@ -21,6 +21,8 @@ import time
 import common_test_tools as ctt
 import unittest2
 from SeaGoatVision.client.controller.json_client import JsonClient
+from subprocess import STDOUT, check_output as qx
+from subprocess import CalledProcessError
 
 SERVER_PATH = ctt.SERVER_PATH
 DELAY_START_SERVER = ctt.DELAY_START_SERVER
@@ -28,6 +30,7 @@ DELAY_CLOSE_SERVER = ctt.DELAY_CLOSE_SERVER
 DELAY_START_CLI = ctt.DELAY_START_CLI
 SERVER_RECEIVE_CMD = "Request : %s"
 SERVER_NOT_EXPECTED = ["ERROR", "WARNING"]
+CMD_BUILD_FILTER = "make"
 
 FILTERCHAIN_NAME = "test_filters"
 EXECUTION_NAME = "test_filters"
@@ -108,3 +111,17 @@ class TestFilter(unittest2.TestCase):
         self.assertTrue(status)
         ctt.expect(self._srv, cmd, SERVER_NOT_EXPECTED,
                    timeout=DELAY_START_CLI)
+
+
+class TestBuildFilter(unittest2.TestCase):
+    def test_build_filter(self):
+        try:
+            output = qx(CMD_BUILD_FILTER, stderr=STDOUT, shell=True).decode(
+                'utf8')
+        except CalledProcessError as e:
+            print(e.output)
+            raise
+        print(output)
+        out = output.upper()
+        assert "WARNING" not in out
+        assert "ERROR" not in out
