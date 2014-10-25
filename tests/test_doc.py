@@ -17,9 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import common_test_tools as ctt
 from subprocess import STDOUT, check_output as qx
 from subprocess import CalledProcessError
 import unittest2
+
+IGNORE_COVERAGE_WARNING = ctt.IGNORE_COVERAGE_WARNING
 
 CMD_GENERATE_DOC = "make SPHINXOPTS='-q' -C ./doc html"
 CMD_DOCTEST = "python2 -m doctest -v SeaGoatVision/commons/param.py"
@@ -42,8 +45,7 @@ class TestDoc(unittest2.TestCase):
             raise
         print(output)
         # Exception, remove the warning of coverage no data collected
-        rem_warn = "Coverage.py warning: No data was collected."
-        out = output.replace(rem_warn, "").upper()
+        out = output.replace(IGNORE_COVERAGE_WARNING, "").upper()
         assert "WARNING" not in out
         assert "ERROR" not in out
 
@@ -57,6 +59,6 @@ class TestDoc(unittest2.TestCase):
             print(e.output)
             raise
         print(output)
-        out = output.upper()
+        out = output.replace(IGNORE_COVERAGE_WARNING, "").upper()
         assert "WARNING" not in out
         assert "ERROR" not in out

@@ -28,6 +28,7 @@ SERVER_PATH = ctt.SERVER_PATH
 DELAY_START_SERVER = ctt.DELAY_START_SERVER
 DELAY_CLOSE_SERVER = ctt.DELAY_CLOSE_SERVER
 DELAY_START_CLI = ctt.DELAY_START_CLI
+IGNORE_COVERAGE_WARNING = ctt.IGNORE_COVERAGE_WARNING
 SERVER_RECEIVE_CMD = "Request : %s"
 SERVER_NOT_EXPECTED = ["ERROR", "WARNING"]
 CMD_BUILD_FILTER = "make"
@@ -122,6 +123,6 @@ class TestBuildFilter(unittest2.TestCase):
             print(e.output)
             raise
         print(output)
-        out = output.upper()
+        out = output.replace(IGNORE_COVERAGE_WARNING, "").upper()
         assert "WARNING" not in out
         assert "ERROR" not in out

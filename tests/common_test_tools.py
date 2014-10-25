@@ -30,6 +30,7 @@ SERVER_START_STR = "Waiting command"
 SERVER_START_DUPLICATE_STR = "SeaGoat already run with the pid"
 SERVER_CLOSE_STR = "Close SeaGoat. See you later!"
 CLI_CMD_READY = "(Cmd)"
+IGNORE_COVERAGE_WARNING = "Coverage.py warning: No data was collected."
 
 
 def start_server(timeout=0, verbose=False):
