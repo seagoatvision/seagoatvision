@@ -30,7 +30,8 @@ SERVER_START_STR = "Waiting command"
 SERVER_START_DUPLICATE_STR = "SeaGoat already run with the pid"
 SERVER_CLOSE_STR = "Close SeaGoat. See you later!"
 CLI_CMD_READY = "(Cmd)"
-IGNORE_COVERAGE_WARNING = "Coverage.py warning: No data was collected."
+LST_IGNORE_WARNING = ["Coverage.py warning: No data was collected.",
+                      "libdc1394 error: Failed to initialize libdc1394"]
 
 
 def start_server(timeout=0, verbose=False):
@@ -81,6 +82,16 @@ def stop_server(child):
     except psutil.TimeoutExpired:
         p.kill()
         raise psutil.TimeoutExpired
+
+
+def expect_warning_str(data):
+    print(data)
+    for str_ignore in LST_IGNORE_WARNING:
+        data = data.replace(str_ignore, "")
+    lines = data.upper().splitlines()
+    error = [line for line in lines if "WARNING" in line or "ERROR" in line]
+    if error:
+        raise BaseException(error)
 
 
 def expect(child, expect_value, not_expect_value=None, timeout=0):
