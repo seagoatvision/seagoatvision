@@ -20,10 +20,8 @@ omit =
     configurations/private/*
 
     # Cannot test with hardware media
-    SeaGoatVision/server/media/implementation/firewire.py
     SeaGoatVision/server/media/implementation/pygame_cam.py
     SeaGoatVision/server/media/implementation/webcam.py
-    configurations/template_media/conf_firewire.py
     configurations/template_media/conf_pygameCam.py
     configurations/template_media/conf_webcam.py
 

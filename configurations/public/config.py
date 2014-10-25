@@ -24,20 +24,16 @@
 # global_env.get_is_local() return True or False
 # Uncomment the other camera module when you need it.
 # import datetime
-from configurations.template_media.conf_webcam import ConfWebcam
+try:
+    from configurations.template_media.conf_webcam import ConfWebcam
+except:
+    ConfWebcam = None
+    print("Skip, webcam is not supported.")
 from configurations.template_media.conf_imageGenerator import \
     ConfImageGenerator
 from configurations.template_media.conf_ipc import ConfIpc
 
 """
-from configurations.template_media.conf_camera import ConfCamera
-# FIREWIRE
-from configurations.template_media.conf_firewire import ConfFirewire
-try:
-    from thirdparty.public.pydc1394 import video1394
-except:
-    pass
-# END FIREWIRE
  from configurations.template_media.conf_pygame_cam import Conf_pygame_cam
 """
 
@@ -64,10 +60,11 @@ path_save_record = ""  # empty string will record on root of seagoat project
 lst_media = []
 
 # add camera webcam with default value
-cam = ConfWebcam()
+if ConfWebcam:
+    cam = ConfWebcam()
 # cam.name = "Webcam" # already use the default name
-default_media_name = cam.name
-lst_media.append(cam)
+    default_media_name = cam.name
+    lst_media.append(cam)
 
 # add image generator
 cam = ConfImageGenerator()
@@ -77,12 +74,6 @@ lst_media.append(cam)
 cam = ConfIpc()
 # cam.device = "/tmp/seagoatvision_media.ipc"
 lst_media.append(cam)
-
-# example of firewire
-# cam = ConfFirewire()
-# cam.guid = 0x123456789
-# cam.name = "Firewire"
-# lst_media.append(cam)
 
 # exemple of Pygame_cam, alternative of webcam
 # cam = Conf_pygame_cam()
