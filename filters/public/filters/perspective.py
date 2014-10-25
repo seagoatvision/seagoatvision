@@ -25,6 +25,7 @@ from SeaGoatVision.server.core.filter import Filter
 
 class Perspective(Filter):
     """Wrap perspective"""
+    # TODO don't hardcode the size of image
 
     def __init__(self):
         Filter.__init__(self)

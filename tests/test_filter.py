@@ -64,7 +64,7 @@ class TestFilter(unittest2.TestCase):
         # TODO all these filter need to be tested, excepted material limitation
         ignore_lst = ["GPUExample", "BGR2Grayscale", "FaceSwap", "resize_img",
                       "BGR2HSVManual", "Watershed", "HoughTransform",
-                      "GaussianBlur"]
+                      "GaussianBlur", "Perspective"]
         filters = [f for f in dct_filters.keys() if
                    not [match for match in ignore_lst if match in f]]
         # print(filters)
@@ -97,7 +97,8 @@ class TestFilter(unittest2.TestCase):
                                                       None)
         self.assertTrue(status)
         # wait 5 seconds of execution to have enough process
-        time.sleep(5)
+        # TODO wait until receive next image and not 10 aleatory second!
+        time.sleep(10)
         ctt.expect(self._srv, cmd, SERVER_NOT_EXPECTED,
                    timeout=DELAY_START_CLI)
 
