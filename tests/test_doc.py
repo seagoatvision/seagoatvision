@@ -26,7 +26,7 @@ CMD_DOCTEST = "python2 -m doctest -v SeaGoatVision/commons/param.py"
 # TIMEOUT_DOC = 60
 
 
-class TestCliLocal(unittest2.TestCase):
+class TestDoc(unittest2.TestCase):
     def test_generate_doc(self):
         """
         Generate documentation and search warning or error message.
