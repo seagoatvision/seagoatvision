@@ -23,4 +23,4 @@ for f in os.listdir(os.path.dirname(__file__)):
     if f.endswith(".py"):
         module_name, _ = os.path.splitext(f)
         code = 'from %(module)s import *' % {'module': module_name}
-        exec (code)
+        exec code

@@ -38,7 +38,7 @@ for f in os.listdir(act_dir):
         continue
     filename, _ = os.path.splitext(f)
     code = 'from %(module)s import *' % {'module': filename}
-    exec (code)
+    exec code
 
 
 # add_filter_module(sys.modules[__name__], __file__)
@@ -49,7 +49,7 @@ for f in os.listdir(os.path.dirname(__file__)):
         continue
     filename, _ = os.path.splitext(f)
     code = 'from %(module)s import *' % {'module': filename}
-    exec (code)
+    exec code
 
 # C++ FILTERS IMPORT
 import_all_cpp_filter(cppfiles, cpptimestamps, sys.modules[__name__], __file__)

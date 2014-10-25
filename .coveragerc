@@ -7,6 +7,9 @@ show_missing = True
 omit =
     tests/*
     thirdparty/*
+    SeaGoatVision/*__init__.py
+    configurations/*__init__.py
+
     # Graphic client is not tested with nose2
     SeaGoatVision/client/analysis/*
     SeaGoatVision/client/qt/*
