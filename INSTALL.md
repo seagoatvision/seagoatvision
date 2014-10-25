@@ -32,7 +32,7 @@ Do this command and continue with Ubuntu section.
 	sudo apt-get install gstreamer0.10-ffmpeg ffmpeg
 
 #### Ubuntu :
-	sudo apt-get install python python-numpy python-scipy python-opencv python-pyside python-qt4 python-imaging libopencv-dev python-pip ffmpeg
+	sudo apt-get install python python-numpy python-scipy python-opencv python-pyside python-qt4 python-imaging libopencv-dev python-pip ffmpeg libzmq-dev
 	sudo pip install -r requirements.txt
 
 #### Fedora :
