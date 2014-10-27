@@ -4,7 +4,7 @@ Welcome to SeagoatVision's Documentation
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    quickstart/index
    tutorial/index

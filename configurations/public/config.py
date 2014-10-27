@@ -43,7 +43,7 @@ keep_alive_media = False
 # Log
 # no log When log_path is None else put a string path with file_name
 log_path = None
-# exemple of log_path
+# example of log_path
 # log_path = "/tmp/log_%s.log" %
 # datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
@@ -52,7 +52,7 @@ log_path = None
 port_tcp_output = 8090
 
 # Media
-path_save_record = ""  # empty string will record on root of seagoat project
+path_save_record = ""  # empty string will record on root of the project
 lst_media = []
 
 # add camera webcam with default value
