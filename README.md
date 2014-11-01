@@ -5,7 +5,6 @@
 
 SeaGoatVision
 =============
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/seagoatvision/seagoatvision?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Description
 -----------
@@ -52,6 +51,8 @@ Read LICENSE file.
 Contact information
 -------------------
 Go on website https://github.com/seagoatvision/seagoatvision and create an issue.
+Or send email to seagoatvision at gmail.com
+Or by chat : [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/seagoatvision/seagoatvision?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Known bugs
 ----------

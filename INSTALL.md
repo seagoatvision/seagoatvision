@@ -21,7 +21,7 @@ http://opencv.willowgarage.com/wiki/InstallGuide
 Installation
 ------------
 ### A. Download the project
-	git clone git://github.com/Octets/SeaGoatVision.git
+	git clone git://github.com/seagoatvision/seagoatvision.git
 
 ###B. Install dependencies
 #### Ubuntu 14.04 :
