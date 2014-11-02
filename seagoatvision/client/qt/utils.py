@@ -44,7 +44,7 @@ def get_ui(widget, force_name=None):
         force_name = win_name(widget)
     loader = QtUiTools.QUiLoader()
     ui_path = os.path.join(
-        'SeaGoatVision',
+        'seagoatvision',
         'client',
         'qt',
         'uifiles',
