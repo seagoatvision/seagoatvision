@@ -25,7 +25,7 @@ import unittest2
 LST_IGNORE_WARNING = ctt.LST_IGNORE_WARNING
 
 CMD_GENERATE_DOC = "make SPHINXOPTS='-q' -C ./doc html"
-CMD_DOCTEST = "python2 -m doctest -v SeaGoatVision/commons/param.py"
+CMD_DOCTEST = "python2 -m doctest -v seagoatvision/commons/param.py"
 # TIMEOUT_DOC = 60
 
 

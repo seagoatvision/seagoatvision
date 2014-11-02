@@ -22,22 +22,22 @@ Description : launch vision client. Can choose multiple client
 """
 
 import sys
-from SeaGoatVision.commons import global_env
+from seagoatvision.commons import global_env
 import argparse
-from SeaGoatVision.commons import log
-from SeaGoatVision.client.controller.subscriber import Subscriber
+from seagoatvision.commons import log
+from seagoatvision.client.controller.subscriber import Subscriber
 
 logger = log.get_logger(__name__)
 
 
 def run_qt(ctr, subscriber, local=False, host="localhost", port=8090):
-    from SeaGoatVision.client.qt.mainqt import run
+    from seagoatvision.client.qt.mainqt import run
 
     return run(ctr, subscriber, local=local, host=host, port=port)
 
 
 def run_cli(ctr, subscriber, local=False, host="localhost", port=8090):
-    from SeaGoatVision.client.cli.cli import run
+    from seagoatvision.client.cli.cli import run
 
     return run(ctr, subscriber, local=local, host=host, port=port)
 
@@ -68,12 +68,12 @@ if __name__ == '__main__':
 
     if args.local:
         global_env.set_is_local(True)
-        from SeaGoatVision.server.core.cmdHandler import CmdHandler
+        from seagoatvision.server.core.cmdHandler import CmdHandler
         # Directly connected to the vision server
         ctr = CmdHandler()
     else:
         # Connect on remote with jsonrpc
-        from SeaGoatVision.client.controller.json_client import JsonClient
+        from seagoatvision.client.controller.json_client import JsonClient
 
         ctr = JsonClient(args.port, host=args.host)
 

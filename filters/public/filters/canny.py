@@ -20,8 +20,8 @@
 import cv2
 from cv2 import cv
 import numpy as np
-from SeaGoatVision.commons.param import Param
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.commons.param import Param
+from seagoatvision.server.core.filter import Filter
 
 
 class Canny(Filter):

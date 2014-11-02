@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from SeaGoatVision.commons.param import Param
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.commons.param import Param
+from seagoatvision.server.core.filter import Filter
 
 
 class ColorLevel(Filter):

@@ -19,7 +19,7 @@
 
 # This file contain configuration about server.py
 
-# from SeaGoatVision.commons import global_env
+# from seagoatvision.commons import global_env
 # if you need to know if you start in local, use next function call
 # global_env.get_is_local() return True or False
 # Uncomment the other camera module when you need it.

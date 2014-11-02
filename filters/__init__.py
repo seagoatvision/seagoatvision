@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from SeaGoatVision.server.core.configuration import Configuration
+from seagoatvision.server.core.configuration import Configuration
 
 config = Configuration()
 

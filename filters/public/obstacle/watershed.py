@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from scipy.ndimage import label
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.server.core.filter import Filter
 # http://stackoverflow.com/questions/11294859/how-to-define-the-markers-for-watershed-in-opencv
 
 

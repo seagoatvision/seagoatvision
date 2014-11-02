@@ -6,7 +6,7 @@ from cv2 import cv
 import numpy as np
 
 import os
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.server.core.filter import Filter
 
 
 class GetFirstFace(Filter):

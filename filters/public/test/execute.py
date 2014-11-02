@@ -22,7 +22,7 @@ import cv2  # @UnusedImport
 from cv2 import cv  # @UnusedImport
 import numpy as np  # @UnusedImport
 import sys
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.server.core.filter import Filter
 import scipy.weave as weave
 
 

@@ -1,5 +1,5 @@
-from SeaGoatVision.commons.param import Param
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.commons.param import Param
+from seagoatvision.server.core.filter import Filter
 from PIL import Image
 from copy import copy
 import numpy as np

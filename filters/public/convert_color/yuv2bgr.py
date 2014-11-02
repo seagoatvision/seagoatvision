@@ -19,7 +19,7 @@
 
 import cv2
 from cv2 import cv
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.server.core.filter import Filter
 
 
 class YUV2BGR(Filter):

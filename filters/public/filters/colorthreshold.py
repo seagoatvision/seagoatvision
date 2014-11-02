@@ -18,8 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import numpy as np
-from SeaGoatVision.commons.param import Param
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.commons.param import Param
+from seagoatvision.server.core.filter import Filter
 
 
 class ColorThreshold(Filter):

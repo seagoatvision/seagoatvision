@@ -6,7 +6,7 @@ Parameter
 Param
 -----
 
-.. automodule:: SeaGoatVision.commons.param
+.. automodule:: seagoatvision.commons.param
    :members:
    :undoc-members:
    :show-inheritance:
@@ -16,7 +16,7 @@ Param
 Param Pool
 ----------
 
-.. automodule:: SeaGoatVision.server.core.pool_param
+.. automodule:: seagoatvision.server.core.pool_param
    :members:
    :undoc-members:
    :show-inheritance:

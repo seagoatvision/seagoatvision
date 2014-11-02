@@ -20,7 +20,7 @@
 import cv
 import cv2
 import numpy
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.server.core.filter import Filter
 
 
 class Undistort(Filter):

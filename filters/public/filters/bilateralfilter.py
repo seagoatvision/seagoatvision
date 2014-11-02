@@ -19,8 +19,8 @@
 
 import cv2
 
-from SeaGoatVision.commons.param import Param
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.commons.param import Param
+from seagoatvision.server.core.filter import Filter
 
 
 class BilateralFilter(Filter):

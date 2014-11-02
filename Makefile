@@ -38,7 +38,7 @@ test: third_party test_flake8
 
 test_flake8:
 	@echo "Flake 8 test"
-	python2 -m flake8 --ignore="E721" --exclude="SeaGoatVision/server/cpp/cpp_code.py,SeaGoatVision/server/cpp/create_module.py" SeaGoatVision
+	python2 -m flake8 --ignore="E721" --exclude="seagoatvision/server/cpp/cpp_code.py,seagoatvision/server/cpp/create_module.py" seagoatvision
 	python2 -m flake8 tests
 	python2 -m flake8 thirdparty/update.py
 

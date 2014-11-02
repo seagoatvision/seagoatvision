@@ -20,8 +20,8 @@
 import os
 import cv2
 from cv2 import cv
-from SeaGoatVision.commons.param import Param
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.commons.param import Param
+from seagoatvision.server.core.filter import Filter
 
 
 class ExePy2(Filter):

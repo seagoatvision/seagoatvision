@@ -20,7 +20,7 @@
 import time
 import common_test_tools as ctt
 import unittest2
-from SeaGoatVision.client.controller.json_client import JsonClient
+from seagoatvision.client.controller.json_client import JsonClient
 from subprocess import STDOUT, check_output as qx
 from subprocess import CalledProcessError
 

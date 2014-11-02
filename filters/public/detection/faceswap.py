@@ -7,7 +7,7 @@ import numpy as np
 
 import os
 import sys
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.server.core.filter import Filter
 
 
 class FaceSwap(Filter):

@@ -26,7 +26,7 @@
 # image.data = image
 
 import scipy.weave as weave
-from SeaGoatVision.server.core.filter import Filter
+from seagoatvision.server.core.filter import Filter
 
 
 class GPUExample(Filter):

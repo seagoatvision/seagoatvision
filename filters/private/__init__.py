@@ -19,8 +19,8 @@
 import os
 import sys
 import time
-# from SeaGoatVision.server.core.utils import add_filter_module
-from SeaGoatVision.server.cpp.create_module import *
+# from seagoatvision.server.core.utils import add_filter_module
+from seagoatvision.server.cpp.create_module import *
 
 # Global variable for cpp filter
 # TODO find another solution to remove global variable, like log file

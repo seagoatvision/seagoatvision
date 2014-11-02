@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from SeaGoatVision.server.media.implementation.ipc import IPC
+from seagoatvision.server.media.implementation.ipc import IPC
 
 
 class ConfIpc:

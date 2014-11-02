@@ -21,8 +21,8 @@ import os
 
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.append(parent_dir)
-from SeaGoatVision.server.core.resource import Resource
-from SeaGoatVision.commons import global_env
+from seagoatvision.server.core.resource import Resource
+from seagoatvision.commons import global_env
 
 # set is local, loading config more faster
 global_env.set_is_local(True)

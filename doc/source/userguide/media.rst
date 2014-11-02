@@ -19,7 +19,7 @@ Media Template
 API
 ----
 
-.. automodule:: SeaGoatVision.server.media.media
+.. automodule:: seagoatvision.server.media.media
    :members:
    :undoc-members:
    :show-inheritance:

@@ -7,21 +7,21 @@ show_missing = True
 omit =
     tests/*
     thirdparty/*
-    SeaGoatVision/*__init__.py
+    seagoatvision/*__init__.py
     configurations/*__init__.py
 
     # Graphic client is not tested with nose2
-    SeaGoatVision/client/analysis/*
-    SeaGoatVision/client/qt/*
-    SeaGoatVision/client/web/*
+    seagoatvision/client/analysis/*
+    seagoatvision/client/qt/*
+    seagoatvision/client/web/*
 
     # Don't test private section
     filters/private/*
     configurations/private/*
 
     # Cannot test with hardware media
-    SeaGoatVision/server/media/implementation/pygame_cam.py
-    SeaGoatVision/server/media/implementation/webcam.py
+    seagoatvision/server/media/implementation/pygame_cam.py
+    seagoatvision/server/media/implementation/webcam.py
     configurations/template_media/conf_pygameCam.py
     configurations/template_media/conf_webcam.py
 
