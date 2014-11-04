@@ -1,0 +1,27 @@
+{
+    "lst_filter": [
+        {
+            "lst_param": [
+                {
+                    "is_lock": false, 
+                    "name": "_active_filter", 
+                    "lst_value": null, 
+                    "min_v": null, 
+                    "value": true, 
+                    "max_v": null, 
+                    "threshold": null
+                }, 
+                {
+                    "is_lock": false, 
+                    "name": "param_str", 
+                    "lst_value": null, 
+                    "min_v": null, 
+                    "value": "", 
+                    "max_v": null, 
+                    "threshold": null
+                }
+            ], 
+            "filter_name": "TestSeagoat"
+        }
+    ]
+}
