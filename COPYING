@@ -15,7 +15,7 @@ project (http://http://seagoatvision.org).
 What does this mean?
 
 If you are modifying SeaGoatVision's software project or adopting any source
-code from Capra's software project for use in another application,
+code from SeaGoatVision's software project for use in another application,
 you must ensure that the copyright and attributions mentioned in the
 license above appear in the code of your modified version or
 application. These attributions must also appear when the package is
@@ -23,7 +23,7 @@ loaded (e.g., via "library" or "require").
 
 ==========================
 
-Copyright (C) 2013  "SeaGoatVision - École de technologie supérieure"
+Copyright (C) 2012-2014  "SeaGoatVision - École de technologie supérieure"
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
