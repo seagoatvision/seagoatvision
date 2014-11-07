@@ -20,6 +20,7 @@
 import pexpect
 import common_test_tools as ctt
 import unittest2
+from seagoatvision.server.core.configuration import Configuration
 
 SERVER_PATH = ctt.SERVER_PATH
 CLIENT_CLI_PATH = ctt.CLIENT_PATH + " cli"
@@ -37,6 +38,8 @@ CLI_EXPECT_GET_FILTERCHAIN_LIST = "Example"
 CLI_EXPECT_EXIT = "Cannot close remote server."
 
 EXECUTION_NAME_EXAMPLE = "Example"
+
+conf = Configuration()
 
 
 class TestCliNotConnected(unittest2.TestCase):
@@ -140,12 +143,16 @@ class TestCli(unittest2.TestCase):
         str_attempt_cli = CLI_EXPECT_GET_MEDIA_LIST
         self._generic_cli_test(cmd, str_attempt_cli)
 
+    @unittest2.skipIf(not conf.get_is_show_public_filterchain(),
+                      "The filter is maybe not contained in private.")
     def test_03_get_filter_list(self):
         cmd = "get_filter_list"
         # attempt one type of filter
         str_attempt_cli = CLI_EXPECT_GET_FILTER_LIST
         self._generic_cli_test(cmd, str_attempt_cli)
 
+    @unittest2.skipIf(not conf.get_is_show_public_filterchain(),
+                      "The filterchain is maybe not contained in private.")
     def test_04_get_filterchain_list(self):
         cmd = "get_filterchain_list"
         # attempt one type of filterchain
@@ -227,12 +234,16 @@ class TestCliLocal(unittest2.TestCase):
         str_attempt_cli = CLI_EXPECT_GET_MEDIA_LIST
         self._generic_cli_test(cmd, str_attempt_cli)
 
+    @unittest2.skipIf(not conf.get_is_show_public_filterchain(),
+                      "The filter is maybe not contained in private.")
     def test_03_get_filter_list(self):
         cmd = "get_filter_list"
         # attempt one type of filter
         str_attempt_cli = CLI_EXPECT_GET_FILTER_LIST
         self._generic_cli_test(cmd, str_attempt_cli)
 
+    @unittest2.skipIf(not conf.get_is_show_public_filterchain(),
+                      "The filterchain is maybe not contained in private.")
     def test_04_get_filterchain_list(self):
         cmd = "get_filterchain_list"
         # attempt one type of filterchain

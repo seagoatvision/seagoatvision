@@ -21,6 +21,7 @@ import time
 import common_test_tools as ctt
 import unittest2
 from seagoatvision.client.controller.json_client import JsonClient
+from seagoatvision.server.core.configuration import Configuration
 from subprocess import STDOUT, check_output as qx
 from subprocess import CalledProcessError
 
@@ -61,6 +62,8 @@ class TestFilter(unittest2.TestCase):
         self.ctr.delete_filterchain(FILTERCHAIN_NAME)
 
     def test_02_create_filterchain(self):
+        conf = Configuration()
+        filters = []
         # get all filter
         dct_filters = self.ctr.get_filter_list()
         self.assertTrue(dct_filters)
@@ -69,8 +72,9 @@ class TestFilter(unittest2.TestCase):
         ignore_lst = ["GPUExample", "BGR2Grayscale", "FaceSwap", "resize_img",
                       "BGR2HSVManual", "Watershed", "HoughTransform",
                       "GaussianBlur", "Perspective"]
-        filters = [f for f in dct_filters.keys() if
-                   not [match for match in ignore_lst if match in f]]
+        if conf.get_is_show_public_filterchain():
+            filters = [f for f in dct_filters.keys() if
+                       not [match for match in ignore_lst if match in f]]
         # print(filters)
         status = self.ctr.modify_filterchain(None, FILTERCHAIN_NAME, filters,
                                              None)

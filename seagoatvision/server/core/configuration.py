@@ -63,8 +63,13 @@ class Configuration(object):
             if not private_config:
                 logger.info("Loading public configuration.")
             try:
-                with open(PUBLIC_THIRDPARTY_CONF) as json_file:
-                    thirdparty_config = json.load(json_file)
+                try:
+                    with open(PUBLIC_THIRDPARTY_CONF) as json_file:
+                        thirdparty_config = json.load(json_file)
+                except:
+                    # TODO work around for make doc, wrong path
+                    with open("../" + PUBLIC_THIRDPARTY_CONF) as json_file:
+                        thirdparty_config = json.load(json_file)
             except BaseException as e:
                 print(e)
                 logger.error("Cannot open thirdparty "
@@ -245,8 +250,9 @@ class Configuration(object):
     def _is_config_exist(file_name, type_name, ignore_not_exist):
         if not os.path.isfile(file_name):
             if not ignore_not_exist:
-                log.print_function(logger.error, "The %s config %s\
-                                    not exist." % (file_name, type_name))
+                log.print_function(logger.error,
+                                   "The %s config %s not exist." % (
+                                       file_name, type_name))
             return False
         return True
 
