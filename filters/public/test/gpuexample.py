@@ -25,7 +25,7 @@
 # image.ndim = Dimage
 # image.data = image
 
-import scipy.weave as weave
+# import scipy.weave as weave
 from seagoatvision.server.core.filter import Filter
 
 

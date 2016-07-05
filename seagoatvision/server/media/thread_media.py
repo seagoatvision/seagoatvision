@@ -19,7 +19,7 @@
 import time
 import threading
 from seagoatvision.commons import log
-import media
+from . import media
 import numpy as np
 
 logger = log.get_logger(__name__)

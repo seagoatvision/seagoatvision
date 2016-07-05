@@ -28,7 +28,6 @@ from seagoatvision.commons import log
 from seagoatvision.commons import keys
 from seagoatvision.commons.param import Param
 import cv2
-from cv2 import cv
 
 logger = log.get_logger(__name__)
 
@@ -168,7 +167,7 @@ class JsonrpcServer():
     @staticmethod
     def _compress_cvmat(image):
         compress_img = cv2.imencode(
-            ".jpeg", image, (cv.CV_IMWRITE_JPEG_QUALITY, 95))
+            ".jpeg", image, (cv2.CV_IMWRITE_JPEG_QUALITY, 95))
         return compress_img[1].dumps()
 
     def _cb_send_image(self, key):

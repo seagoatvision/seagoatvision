@@ -16,10 +16,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-from convert_color import *
-from detection import *
-from draw import *
-from example import *
-from filters import *
-from obstacle import *
-from test import *
+from .convert_color import *
+from .detection import *
+from .draw import *
+from .example import *
+from .filters import *
+from .obstacle import *
+from .test import *

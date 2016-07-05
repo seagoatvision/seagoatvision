@@ -19,11 +19,10 @@
 
 # These are necessary for the executed code.
 import cv2  # @UnusedImport
-from cv2 import cv  # @UnusedImport
 import numpy as np  # @UnusedImport
 import sys
 from seagoatvision.server.core.filter import Filter
-import scipy.weave as weave
+#import scipy.weave as weave
 
 
 class Exec(Filter):
@@ -49,7 +48,7 @@ class Exec(Filter):
 
     def exec_python(self, image):
         if self._ccode is not None:
-            exec self._ccode
+            exec(self._ccode)
         return image
 
     def exec_cpp(self, numpy_array):

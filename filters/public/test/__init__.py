@@ -24,8 +24,8 @@ for f in os.listdir(os.path.dirname(__file__)):
     if not f.endswith(".py") or f == "__init__.py":
         continue
     filename, _ = os.path.splitext(f)
-    code = 'from %(module)s import *' % {'module': filename}
-    exec code
+    code = 'from .%(module)s import *' % {'module': filename}
+    exec(code)
 
 # Global variable for cpp filter
 # TODO find another solution to remove global variable, like log file

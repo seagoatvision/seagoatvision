@@ -17,10 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from media import Media
+from .media import Media
 from seagoatvision.commons import keys
-from recording.video_recorder import VideoRecorder
-from recording.image_recorder import ImageRecorder
+from .recording.video_recorder import VideoRecorder
+from .recording.image_recorder import ImageRecorder
 from seagoatvision.commons import log
 
 logger = log.get_logger(__name__)

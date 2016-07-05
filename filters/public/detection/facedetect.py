@@ -1,7 +1,6 @@
 # http://docs.opencv.org/doc/tutorials/objdetect/cascade_classifier/cascade_classifier.html
 
 import cv2
-from cv2 import cv
 import os
 from seagoatvision.server.core.filter import Filter
 from seagoatvision.commons.param import Param
@@ -26,12 +25,12 @@ class FaceDetection(Filter):
         self.notify_filter = Param("notify", False)
 
     def execute(self, image):
-        gray = cv2.cvtColor(image, cv.CV_BGR2GRAY)
+        gray = cv2.cvtColor(image, cv2.CV_BGR2GRAY)
         cv2.equalizeHist(gray, gray)
         faces = self.face_cascade.detectMultiScale(gray,
                                                    1.1,
                                                    2,
-                                                   0 | cv.CV_HAAR_SCALE_IMAGE,
+                                                   0 | cv2.CV_HAAR_SCALE_IMAGE,
                                                    (30, 30))
         for face in faces:
             self.draw_rectangle(image, face, (0, 0, 255))

@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cv2
-from cv2 import cv
 import numpy as np
 from seagoatvision.commons.param import Param
 from seagoatvision.server.core.filter import Filter
@@ -33,7 +32,7 @@ class Canny(Filter):
         self.threshold2 = Param("Threshold2", 100, min_v=0, max_v=255)
 
     def execute(self, image):
-        gray = cv2.cvtColor(image, cv.CV_BGR2GRAY)
+        gray = cv2.cvtColor(image, cv2.CV_BGR2GRAY)
 
         cv2.Canny(gray,
                   self.threshold1.get(),

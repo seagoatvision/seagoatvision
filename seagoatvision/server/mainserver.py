@@ -24,14 +24,14 @@ Description : Start the Vision Server
 import os
 import sys
 
-from core.configuration import Configuration
+from .core.configuration import Configuration
 from seagoatvision.commons import log
 
 logger = log.get_logger(__name__)
 config = None
 path = None
 # Import required RPC modules
-from controller import jsonrpc_server
+from .controller import jsonrpc_server
 
 
 def run(p_port=None, verbose=False, config_path=None):

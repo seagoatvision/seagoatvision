@@ -21,7 +21,6 @@ import os
 import time
 from PIL import Image
 import cv2
-from cv2 import cv
 import numpy as np
 from threading import Semaphore
 from seagoatvision.server.core.configuration import Configuration
@@ -92,7 +91,7 @@ class VideoRecorder:
             return
         # convert image to rgb in image2
         image2 = np.asarray(image, dtype="uint8")
-        cv2.cvtColor(image, cv.CV_BGR2RGB, image2)
+        cv2.cvtColor(image, cv2.CV_BGR2RGB, image2)
         # convert in PIL image
         img = Image.fromarray(image2, 'RGB')
         # Save it in ffmpeg process

@@ -22,8 +22,8 @@ Description :
 """
 
 from seagoatvision.server.tcp_server import Server
-from configuration import Configuration
-from resource import Resource
+from .configuration import Configuration
+from .resource import Resource
 from seagoatvision.commons import log
 from seagoatvision.commons import keys
 import os
@@ -32,7 +32,7 @@ from seagoatvision.server.media.recording.video_recorder import VideoRecorder
 from seagoatvision.server.media.implementation.movie import Movie
 import time
 import inspect
-import thread
+import _thread as thread
 import threading
 
 logger = log.get_logger(__name__)

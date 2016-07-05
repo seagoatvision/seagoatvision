@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cv2
-from cv2 import cv
 from seagoatvision.commons.param import Param
 from seagoatvision.server.core.filter import Filter
 
@@ -41,7 +40,7 @@ class Morphology(Filter):
                                                   self.anchor_y.get()))
 
     def execute(self, image):
-        morph = cv2.cvtColor(image, cv.CV_BGR2GRAY)
+        morph = cv2.cvtColor(image, cv2.CV_BGR2GRAY)
         cv2.morphologyEx(
             morph,
             cv2.MORPH_CLOSE,

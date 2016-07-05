@@ -23,7 +23,6 @@ filter chain."""
 from seagoatvision.server.core.filter import Filter
 from seagoatvision.commons import keys
 import cv2
-from cv2 import cv
 import numpy as np
 from seagoatvision.commons import log
 
@@ -41,7 +40,7 @@ class FilterChain(object):
     def __init__(self, filterchain_name, serialize=None,
                  default_media_name=None):
         # to limit the infini import, we import in the init
-        from resource import Resource
+        from .resource import Resource
 
         self.resource = Resource()
 
@@ -314,6 +313,6 @@ class FilterChain(object):
             return
             # copy the picture because the next filter will modify him
         # transform it in rgb
-        image2 = cv2.cvtColor(np.copy(image), cv.CV_BGR2RGB)
+        image2 = cv2.cvtColor(np.copy(image), cv2.CV_BGR2RGB)
         for observer in lst_observer:
             observer(image2)

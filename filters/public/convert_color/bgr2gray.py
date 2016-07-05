@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cv2
-from cv2 import cv
 from seagoatvision.server.core.filter import Filter
 
 
@@ -29,6 +28,6 @@ class BGR2Grayscale(Filter):
         Filter.__init__(self)
 
     def execute(self, image):
-        cv2.cvtColor(image, cv.CV_BGR2GRAY, image)
-        cv2.cvtColor(image, cv.CV_GRAY2BGR, image)
+        cv2.cvtColor(image, cv2.CV_BGR2GRAY, image)
+        cv2.cvtColor(image, cv2.CV_GRAY2BGR, image)
         return image

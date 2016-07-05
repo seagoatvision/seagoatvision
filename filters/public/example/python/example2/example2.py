@@ -19,7 +19,6 @@
 
 import os
 import cv2
-from cv2 import cv
 from seagoatvision.commons.param import Param
 from seagoatvision.server.core.filter import Filter
 
@@ -88,7 +87,7 @@ class ExePy2(Filter):
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         cv2.equalizeHist(gray, gray)
         faces = self.face_cascade.detectMultiScale(gray, 1.1, 2,
-                                                   0 | cv.CV_HAAR_SCALE_IMAGE,
+                                                   0 | cv2.CV_HAAR_SCALE_IMAGE,
                                                    (30, 30))
         for face in faces:
             self.draw_rectangle(image, face, self.color_rect, self.i_text_size)

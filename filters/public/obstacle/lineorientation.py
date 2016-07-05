@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cv2
-from cv2 import cv
 import math
 import numpy as np
 
@@ -74,7 +73,7 @@ class LineOrientation(Filter):
             area = np.abs(cv2.contourArea(contour))
 
             if self.area_min.get() < area < self.area_max.get():
-                line_values = cv2.fitLine(approx, cv.CV_DIST_L2, 0, 0.01, 0.01)
+                line_values = cv2.fitLine(approx, cv2.CV_DIST_L2, 0, 0.01, 0.01)
                 rect = cv2.boundingRect(approx)
                 t = math.sqrt((rect[2] ** 2 + rect[3] ** 2) / 2.0)
                 lines.append((line_values, t))

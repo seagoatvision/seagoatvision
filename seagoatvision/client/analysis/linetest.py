@@ -17,11 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from seagoatvision.server.imageproviders.implementation.imagefolder import \
-    ImageFolder
+from seagoatvision.server.imageproviders.implementation.imagefolder import ImageFolder
 
 import cv2
-from cv2 import cv
 import math
 import numpy as np
 import os
@@ -213,7 +211,7 @@ class LineTest:
         """Convert a filtered image to binary
         pixel = 0 -> 0
         pixel > 0 -> 255"""
-        gray = cv2.cvtColor(filtered, cv.CV_BGR2GRAY)
+        gray = cv2.cvtColor(filtered, cv2.CV_BGR2GRAY)
         binary = np.zeros(gray.shape, dtype=np.uint8)
         binary[gray > 0] = 255
         return binary

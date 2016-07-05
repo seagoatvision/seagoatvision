@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cv2
-from cv2 import cv
 import numpy as np
 from seagoatvision.commons.param import Param
 from seagoatvision.server.core.filter import Filter
@@ -42,7 +41,7 @@ class HoughTransform(Filter):
         lines = cv2.HoughLines(
             edges,
             self.rho.get(),
-            cv.CV_PI / self.theta.get(),
+            cv2.CV_PI / self.theta.get(),
             self.threshold.get())
         if lines is None:
             return image

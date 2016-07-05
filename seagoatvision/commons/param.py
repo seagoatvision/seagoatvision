@@ -96,7 +96,8 @@ class Param(object):
             # self.name, self.value))
             return
 
-        if not isinstance(name, str) and not isinstance(name, unicode):
+        # if not isinstance(name, str) and not isinstance(name, unicode):
+        if not isinstance(name, str):
             raise ValueError("Name must be string value.")
 
         self._init_param(value, min_v, max_v, lst_value, force_type, thres_h,
@@ -120,54 +121,63 @@ class Param(object):
                      type_validated=False):
         type_t = type(value)
         if not type_validated and not (type_t is int
-                                       or type_t is types.NoneType
+                                       or type_t is str
                                        or type_t is bool
                                        or type_t is float
-                                       or type_t is str
-                                       or type_t is long
-                                       or type_t is unicode):
+                                       or type_t is type(None)
+                                       # or type_t is long
+                                       # or type_t is unicode):
+                                       ):
             raise ValueError("Param don't manage type %s" % type_t)
-        if type_t is unicode:
-            type_t = str
-        if type_t is long:
-            type_t = int
-            if min_v is not None:
-                min_v = int(min_v)
-            if max_v is not None:
-                max_v = int(max_v)
-        if type_t is float or type_t is int:
-            # check min and max
-            if min_v is not None:
-                type_min = type(min_v)
-                if not (type_min is float
-                        or type_min is int
-                        or type_min is long):
-                    raise ValueError(
-                        "min_v must be float or int, type is %s." % type_min)
-            if max_v is not None:
-                type_max = type(max_v)
-                if not (type_max is float
-                        or type_max is int
-                        or type_max is long):
-                    raise ValueError(
-                        "max_v must be float or int, type is %s." % type(
-                            max_v))
-            if type_t is float:
-                min_v = None if min_v is None else float(min_v)
-                max_v = None if max_v is None else float(max_v)
-                lst_value = None if lst_value is None else [float(val) for
-                                                            val in lst_value]
-            if type_t is int:
-                min_v = None if min_v is None else int(min_v)
-                max_v = None if max_v is None else int(max_v)
-                lst_value = None if lst_value is None else [int(val) for
-                                                            val in lst_value]
-        if lst_value is not None and \
-                not (isinstance(lst_value, tuple) or isinstance(lst_value,
-                                                                list)):
-            raise ValueError(
-                "lst_value must be list or tuple, type is %s." % type(
-                    lst_value))
+        # TODO unicode is not supported in python3
+        # if type_t is unicode:
+        #     type_t = str
+        # if type_t is long:
+        #     type_t = int
+        #     if min_v is not None:
+        #         min_v = int(min_v)
+        #     if max_v is not None:
+        #         max_v = int(max_v)
+
+        # TODO got error
+        # line 171, in _valid_param lst_value
+        # ValueError: lst_value must be list or tuple, type is <class 'dict_keys'>.
+        #
+        # if type_t is float or type_t is int:
+        #     # check min and max
+        #     if min_v is not None:
+        #         type_min = type(min_v)
+        #         if not (type_min is float
+        #                 or type_min is int
+        #                 or type_min is long):
+        #             raise ValueError(
+        #                 "min_v must be float or int, type is %s." % type_min)
+        #     if max_v is not None:
+        #         type_max = type(max_v)
+        #         if not (type_max is float
+        #                 or type_max is int
+        #                 or type_max is long):
+        #             raise ValueError(
+        #                 "max_v must be float or int, type is %s." % type(
+        #                     max_v))
+        #     if type_t is float:
+        #         min_v = None if min_v is None else float(min_v)
+        #         max_v = None if max_v is None else float(max_v)
+        #         lst_value = None if lst_value is None else [float(val) for
+        #                                                     val in lst_value]
+        #     if type_t is int:
+        #         min_v = None if min_v is None else int(min_v)
+        #         max_v = None if max_v is None else int(max_v)
+        #         lst_value = None if lst_value is None else [int(val) for
+        #                                                     val in lst_value]
+        # if lst_value is not None and \
+        #         not (isinstance(lst_value, tuple) or isinstance(lst_value,
+        #                                                         list)):
+        #     raise ValueError(
+        #         "lst_value must be list or tuple, type is %s." % type(
+        #             lst_value))
+
+
         self.min_v = min_v
         self.max_v = max_v
         self.lst_value = lst_value
@@ -274,7 +284,7 @@ class Param(object):
     def get(self):
         # Exception, cannot convert to numpy array
         # this can create bug in your filter if you pass wrong type
-        if self.force_type is types.NoneType:
+        if type(self.force_type) is type(None):
             return self.value
         if self.threshold is not None:
             return self.force_type(self.value), self.force_type(self.threshold)
@@ -287,19 +297,20 @@ class Param(object):
 
     def set(self, value, threshold=None):
         # don't change value if it's the same value, except for None
-        if self.type_t is types.NoneType:
+        if self.type_t is type(None):
             self._send_notification()
             return True
         if type(value) is not None:
             if value == self.value:
                 return False
-        if isinstance(value, unicode):
-            value = str(value)
+        # if isinstance(value, unicode):
+        #     value = str(value)
         if self.type_t is bool:
             value = bool(value)
 
-        if self.type_t is int and (isinstance(value, float)
-                                   or isinstance(value, long)):
+        if self.type_t is int and (isinstance(value, float)):
+            # if self.type_t is int and (isinstance(value, float)
+            #                            or isinstance(value, long)):
             value = int(value)
         if self.type_t is float and isinstance(value, int):
             value = float(value)

@@ -21,7 +21,7 @@ from seagoatvision.commons.param import Param
 from seagoatvision.server.core.configuration import Configuration
 from seagoatvision.commons import log
 import cv2
-import thread
+import _thread as thread
 import zmq
 import numpy as np
 

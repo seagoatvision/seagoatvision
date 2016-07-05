@@ -19,9 +19,9 @@
 
 import os
 import cv2
-from media import Media
-from implementation.movie import Movie
-from implementation.imagefolder import ImageFolder
+from .media import Media
+from .implementation.movie import Movie
+from .implementation.imagefolder import ImageFolder
 from seagoatvision.commons import keys
 
 

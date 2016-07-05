@@ -22,6 +22,6 @@ from seagoatvision.server.core.configuration import Configuration
 config = Configuration()
 
 if config.get_is_show_public_filter():
-    from public import *
+    from .public import *
 if config.get_is_show_private_filter():
-    from private import *
+    from .private import *

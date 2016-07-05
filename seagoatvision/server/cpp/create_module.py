@@ -23,10 +23,11 @@ import time
 from seagoatvision.commons import log
 from seagoatvision.server.core.filter import Filter
 from seagoatvision.server.core.configuration import Configuration
-from cpp_code import *
+from .cpp_code import *
 import numpy as np
-from python_code import *
-import scipy.weave.ext_tools as ext_tools
+from .python_code import *
+# TODO weave not exist in python3
+# from scipy.weave import ext_tools as ext_tools
 
 
 # import sys
@@ -42,6 +43,8 @@ config = Configuration()
 def import_all_cpp_filter(
         cppfiles, cpptimestamps, module, file, extra_link_arg=[],
         extra_compile_arg=[]):
+    # TODO weave is not supported in python3
+    return
     """
     This method finds and compile every c++ filters
     If a c++ file changed, the file must be recompiled in a new .so file

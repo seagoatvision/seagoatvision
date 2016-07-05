@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from seagoatvision.server.core.pool_param import PoolParam
-from thread_media import ThreadMedia
+from .thread_media import ThreadMedia
 import numpy as np
 from seagoatvision.commons import keys
 from seagoatvision.commons import log

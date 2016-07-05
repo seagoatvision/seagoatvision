@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cv2
-from cv2 import cv
 
 
 class Movie:
@@ -45,31 +44,31 @@ class Movie:
         return self.video.isOpened()
 
     def get_width(self):
-        return self.video.get(cv.CV_CAP_PROP_FRAME_WIDTH)
+        return self.video.get(cv2.CV_CAP_PROP_FRAME_WIDTH)
 
     def set_width(self, width):
-        self.video.set(cv.CV_CAP_PROP_FRAME_WIDTH, width)
+        self.video.set(cv2.CV_CAP_PROP_FRAME_WIDTH, width)
 
     def get_height(self):
-        return self.video.get(cv.CV_CAP_PROP_FRAME_HEIGHT)
+        return self.video.get(cv2.CV_CAP_PROP_FRAME_HEIGHT)
 
     def set_height(self, height):
-        self.video.set(cv.CV_CAP_PROP_FRAME_HEIGHT, height)
+        self.video.set(cv2.CV_CAP_PROP_FRAME_HEIGHT, height)
 
     def get_fps(self):
-        return self.video.get(cv.CV_CAP_PROP_FPS)
+        return self.video.get(cv2.CV_CAP_PROP_FPS)
 
     def set_fps(self, fps):
-        self.video.set(cv.CV_CAP_PROP_FPS, fps)
+        self.video.set(cv2.CV_CAP_PROP_FPS, fps)
 
     def get_position(self):
-        return self.video.get(cv.CV_CAP_PROP_POS_FRAMES)
+        return self.video.get(cv2.CV_CAP_PROP_POS_FRAMES)
 
     def set_position(self, pos):
-        self.video.set(cv.CV_CAP_PROP_POS_FRAMES, pos)
+        self.video.set(cv2.CV_CAP_PROP_POS_FRAMES, pos)
 
     def get_total_frames(self):
-        return self.video.get(cv.CV_CAP_PROP_FRAME_COUNT)
+        return self.video.get(cv2.CV_CAP_PROP_FRAME_COUNT)
 
     def reset(self):
         self.open_file()
